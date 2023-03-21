@@ -1,0 +1,159 @@
+const Product = require("../models/productModel");
+const Review = require("../models/reviewModel");
+
+// CREATE PRODUCT
+const createProduct = async(req, res) => {
+    const newProduct = new Product(req.body);
+
+    try {
+        const savedProduct = await newProduct.save();
+        res.status(200).json(savedProduct);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
+
+// UPDATE PRODUCT
+const updateProduct = async(req, res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+        $set: req.body,
+        },
+        { new: true }
+        );
+
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
+// DELETE PRODUCT
+const deleteProduct = async(req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.status(200).json("Product has been deleted...");
+    } catch (err) {
+     res.status(400).json(err);
+    }
+};
+
+// GET SINGLE PRODUCT
+const getSingleProduct = async(req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        res.status(200).json(product);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
+// GET ALL PRODUCTS
+const getAllProducts = async(req, res) => {
+    const qNew = req.query.new;
+    const qCategory = req.query.category;
+
+    try {
+    let products;
+    if (qNew) {
+        products = await Product.find().sort({ createdAt: -1 }).limit(1);
+    } else if (qCategory) {
+        products = await Product.find({
+        categories: {
+            $in: [qCategory],
+        },
+        });
+    } else {
+        products = await Product.find();
+    }
+    
+        res.status(200).json(products);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+    
+// CREATE PRODUCT REVIEW
+const createProductReview = async(req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }  
+
+        const review = new Review({
+            user: req.user._id,
+            product: product._id,
+            rating: req.body.rating,
+            comment: req.body.comment,
+        });
+            
+        const savedReview = await review.save();
+        product.reviews.push(savedReview._id);
+        product.numReviews = product.reviews.length;
+        product.rating =
+        product.reviews.reduce((a, c) => c.rating + a, 0) / product.numReviews;
+        await product.save();
+        res.status(201).json({ message: "Review added successfully" });
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+        
+// GET ALL REVIEWS FOR A PRODUCT
+const getProductReview = async(req, res) => {
+    try {
+        const reviews = await Review.find({ product: req.params.id })
+        .populate("user", "_id name")
+        .select("-__v");
+
+        if (!reviews) {
+            return res.status(404).json({ message: "No reviews found" });
+        }
+
+        res.status(200).json(reviews);
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ err: 'Internal server error' })
+    }
+}
+
+const updateProductReview = async (req, res) => {
+    try {
+      const review = await Review.findById(req.params.id);
+  
+      if (!review) {
+        return res.status(404).json({ message: "Review not found" });
+      }
+  
+      if (req.user._id.toString() !== review.user.toString()) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+  
+      review.rating = req.body.rating || review.rating;
+      review.comment = req.body.comment || review.comment;
+      review.updatedAt = Date.now();
+  
+      const updatedReview = await review.save();
+  
+      const product = await Product.findById(review.product);
+      product.rating = product.reviews.reduce(
+        (a, c) => c.rating + a,
+        0
+      ) / product.numReviews;
+      await product.save();
+  
+      res.status(200).json({ message: "Review updated successfully" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ message: "Internal server error" });
+    }
+  };
+  
+
+  
+
+module.exports = {createProduct, getAllProducts, getSingleProduct, deleteProduct, updateProduct, createProductReview, getProductReview, updateProductReview}
