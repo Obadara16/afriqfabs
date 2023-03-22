@@ -1,4 +1,4 @@
-const Order = require('../models/Order');
+const Order = require('../models/orderModel');
 
 
 // Create a new order
@@ -38,7 +38,7 @@ const deleteOrderById = async (req, res) => {
         if (!deletedOrder) {
         return res.status(404).json({ message: 'Order not found' });
         }
-        res.status(200).json();
+        res.status(200).json({message: "order deleted successfully"});
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

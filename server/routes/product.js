@@ -12,7 +12,7 @@ router.get('/find/:id', getSingleProduct)
 router.get('/', getAllProducts)
 router.post('/:id/reviews', requireAuth, createProductReview)
 router.get('/:id/reviews',  getProductReview)
-router.put(':productId/reviews/:reviewId', requireAuth,  updateProductReview)
+router.put('/:productId/reviews/:id', requireAuth,  updateProductReview)
 
 
 module.exports = router

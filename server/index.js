@@ -2,6 +2,11 @@ const express = require("express")
 const mongoose = require("mongoose")
 require("dotenv").config()
 const authRoutes = require("./routes/auth")
+const cartRoutes = require("./routes/cart")
+const orderRoutes = require("./routes/order")
+const paymentRoutes = require("./routes/payment")
+const productRoutes = require("./routes/product")
+const userRoutes = require("./routes/user")
 
 //Use express
 const app = express();
@@ -32,3 +37,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 // Routes
 app.use("/api/auth", authRoutes)
+app.use("/api/carts", cartRoutes)
+app.use("/api/orders", orderRoutes)
+app.use("/api/payments", paymentRoutes)
+app.use("/api/products", productRoutes)
+app.use("/api/users", userRoutes)

@@ -10,7 +10,7 @@ router.put('/:id', requireAuthAndAdmin, updateOrderById)
 router.delete('/:id', requireAuthAndAdmin, deleteOrderById)
 router.get('/find/:userId', requireAuthAndAuthorization, getOrdersByUserId)
 router.get('/', requireAuthAndAdmin, getAllOrders)
-router.get('/', requireAuthAndAdmin, getMonthlyIncome)
+router.get('/income', requireAuthAndAdmin, getMonthlyIncome)
 
 
 module.exports = router

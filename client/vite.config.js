@@ -9,4 +9,9 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  esbuild: {
+    // this will allow dynamic require statements in faker to work correctly
+    // remove this if you are not using faker or similar libraries
+    jsxInject: `import React from 'react'`,
+  },
 });

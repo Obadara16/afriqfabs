@@ -1,15 +1,26 @@
 const Cart = require('../models/cartModel');
+const mongoose = require("mongoose")
 
 // Create a new cart
 const createCart = async (req, res) => {
   try {
     const { userId, products } = req.body;
+
+
+    // Check if product IDs are valid
+    // for (let i = 0; i < products.length; i++) {
+    //   if (!mongoose.Types.ObjectId.isValid(products[i].productId)) {
+    //     return res.status(400).json({ error: `Invalid product ID: ${products[i].productId}` });
+    //   }
+    // }
+
     const cart = await Cart.create({ userId, products });
     res.status(200).json({ cart });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all carts
 const getAllCarts = async (req, res) => {
@@ -55,7 +66,7 @@ const deleteCartById = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
     res.status(204).json();
-  } catch (error) {
+  } catch (error) {{message: "cart removed successfully"}
     res.status(400).json({ error: error.message });
   }
 };

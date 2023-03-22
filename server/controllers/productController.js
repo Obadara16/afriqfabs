@@ -1,10 +1,11 @@
 const Product = require("../models/productModel");
 const Review = require("../models/reviewModel");
+const mongoose = require("mongoose")
 
 // CREATE PRODUCT
 const createProduct = async(req, res) => {
     const newProduct = new Product(req.body);
-
+    
     try {
         const savedProduct = await newProduct.save();
         res.status(200).json(savedProduct);
@@ -15,6 +16,8 @@ const createProduct = async(req, res) => {
 
 // UPDATE PRODUCT
 const updateProduct = async(req, res) => {
+    
+    
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
@@ -26,6 +29,9 @@ const updateProduct = async(req, res) => {
 
         res.status(200).json(updatedProduct);
     } catch (err) {
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+          }
         res.status(400).json(err);
     }
 };
@@ -36,7 +42,10 @@ const deleteProduct = async(req, res) => {
         await Product.findByIdAndDelete(req.params.id);
         res.status(200).json("Product has been deleted...");
     } catch (err) {
-     res.status(400).json(err);
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+          }
+        res.status(400).json(err);
     }
 };
 
@@ -46,6 +55,9 @@ const getSingleProduct = async(req, res) => {
         const product = await Product.findById(req.params.id);
         res.status(200).json(product);
     } catch (err) {
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+          }
         res.status(400).json(err);
     }
 };
@@ -97,8 +109,11 @@ const createProductReview = async(req, res) => {
         product.rating =
         product.reviews.reduce((a, c) => c.rating + a, 0) / product.numReviews;
         await product.save();
-        res.status(201).json({ message: "Review added successfully" });
+        res.status(200).json({ message: "Review added successfully"});
     } catch (err) {
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+          }
         res.status(400).json(err);
     }
 };
@@ -116,42 +131,53 @@ const getProductReview = async(req, res) => {
 
         res.status(200).json(reviews);
     } catch (err) {
-        console.log(err)
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+          }
         res.status(400).json({ err: 'Internal server error' })
     }
 }
 
 const updateProductReview = async (req, res) => {
     try {
-      const review = await Review.findById(req.params.id);
+        const review = await Review.findById(req.params.id);
   
-      if (!review) {
-        return res.status(404).json({ message: "Review not found" });
-      }
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
   
-      if (req.user._id.toString() !== review.user.toString()) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
+        if (req.user._id.toString() !== review.user.toString()) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
   
-      review.rating = req.body.rating || review.rating;
-      review.comment = req.body.comment || review.comment;
-      review.updatedAt = Date.now();
+        const { rating, comment } = req.body;
+        review.rating = rating || review.rating;
+        review.comment = comment || review.comment;
+        review.updatedAt = Date.now();
   
-      const updatedReview = await review.save();
+        const savedReview = await review.save();
   
-      const product = await Product.findById(review.product);
-      product.rating = product.reviews.reduce(
-        (a, c) => c.rating + a,
-        0
-      ) / product.numReviews;
-      await product.save();
+        const product = await Product.findById(review.product);
+        const reviews = await Review.find({ product: product._id });
+        const numReviews = reviews.length;
+        const ratingSum = reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = ratingSum / numReviews;
   
-      res.status(200).json({ message: "Review updated successfully" });
+        product.rating = averageRating;
+        product.numReviews = numReviews;
+  
+        await product.save();
+  
+        res.status(200).json({ message: "Review updated successfully" });
     } catch (err) {
-      console.log(err);
-      res.status(400).json({ message: "Internal server error" });
+        console.log(err);
+        if (err.name === "CastError") {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(400).json(err);
     }
-  };
+};
+
   
 
   

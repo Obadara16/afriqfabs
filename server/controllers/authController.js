@@ -5,6 +5,8 @@ const validator = require("validator")
 const Verification = require("../models/verificationModel")
 const jwt = require("jsonwebtoken")
 const { v4: uuidv4 } = require('uuid');
+const { sendVerificationEmail } = require("../services/email.js");
+
 require("dotenv").config()
 
 const createToken = (_id) => {
@@ -37,9 +39,12 @@ const loginUser = async(req, res) => {
             throw Error("Incorrect Password")
         }
 
+        if (!user.isVerified) {
+            throw Error("Email not verified. Please check your email and click on the verification link to verify your account.")
+        }
 
         const token = createToken({
-            id: user._id,
+            _id: user._id,
             isAdmin: user.isAdmin,
           },
           process.env.SECRET_KEY,
@@ -82,8 +87,6 @@ const registerUser = async(req, res) => {
 
         const newUser = await User.create({email, password: hash})
 
-        // const token = createToken(newUser._id)
-
         // Generate a unique verification code/token
         const verificationCode = uuidv4();
 
@@ -104,10 +107,37 @@ const registerUser = async(req, res) => {
 }
 
 
-  
-  
-  
-  
+const verifyEmail = async (req, res) => {
+  try {
+    const { verificationCode } = req.params;
 
-module.exports = {loginUser, registerUser}
+    // Find the verification object associated with the code
+    const verification = await Verification.findOne({ code: verificationCode });
 
+    if (!verification) {
+      throw Error("Invalid verification code");
+    }
+
+    // Update the user's isVerified field to true
+    const user = await User.findOneAndUpdate(
+      { email: verification.email },
+      { isVerified: true },
+      { new: true }
+    );
+
+    if (!user) {
+      throw Error("User not found");
+    }
+
+    // Delete the verification object
+    await Verification.findOneAndDelete({ code: verificationCode });
+
+    res.status(200).json({ message: "Email verified successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
+module.exports = {loginUser, registerUser, verifyEmail}

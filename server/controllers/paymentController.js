@@ -1,12 +1,13 @@
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const paystack = require("paystack")(process.env.PAYSTACK_SECRET_KEY);
 
 processPayment = async (req, res) => {
   try {
-    const { tokenId, amount } = req.body;
-    const payment = await stripe.charges.create({
-      source: tokenId,
-      amount: amount,
-      currency: "usd",
+    const { reference, amount, email } = req.body;
+    const payment = await paystack.transaction.initialize({
+      email: email,
+      amount: amount * 100, // Paystack requires the amount to be in kobo (i.e. multiplied by 100)
+      reference: reference,
+      currency: "NGN",
     });
     res.status(200).json(payment);
   } catch (err) {
@@ -14,4 +15,4 @@ processPayment = async (req, res) => {
   }
 };
 
-module.exports = processPayment;
+module.exports = { processPayment };

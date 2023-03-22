@@ -6,9 +6,9 @@ const { requireAuth,  requireAuthAndAdmin, requireAuthAndAuthorization } = requi
 
 
 router.post('/', requireAuth, createCart)
-router.put('/:id', requireAuthAndAuthorization, updateCart)
+router.put('/:id', requireAuthAndAuthorization, updateCartById)
 router.delete('/:id', requireAuthAndAuthorization, deleteCartById)
-router.get('/find/:userId', getCartById)
+router.get('/find/:userId', requireAuthAndAuthorization, getCartById)
 router.get('/', requireAuthAndAdmin, getAllCarts)
 
 

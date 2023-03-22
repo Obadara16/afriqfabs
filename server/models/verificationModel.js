@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const verificationSchema = new mongoose.Schema({
+const VerificationSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   code: {
     type: String,
@@ -12,8 +13,8 @@ const verificationSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: "30m", // expire verification code after 30 minutes
+    expires: '24h', // Verification code will expire after 24 hours
   },
 });
 
-module.exports = mongoose.model("Verification", verificationSchema);
+module.exports = mongoose.model('Verification', VerificationSchema);

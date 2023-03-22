@@ -8,7 +8,7 @@ const {
     getUserStats,
     changePassword,
   } = require('../controllers/userController')
-const { requireAuthAndAuthorization, requireAuth } = require("../middlewares/requireAuth")
+const { requireAuthAndAuthorization, requireAuthAndAdmin } = require("../middlewares/requireAuth")
 
 
 router.put('/:id', requireAuthAndAuthorization, updateUser)
