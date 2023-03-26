@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const SearchBar = ({className}) => {
+const SearchComponent = ({className}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmit = (event) => {
@@ -26,4 +26,4 @@ const SearchBar = ({className}) => {
   );
 };
 
-export default SearchBar;
+export default SearchComponent;

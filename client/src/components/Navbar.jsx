@@ -7,7 +7,7 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.svg";
-import Searchbar from "./Searchbar";
+import SearchComponent from "./SearchComponent";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -36,7 +36,7 @@ const Navbar = () => {
       <div
         className={`${isNavOpen ? "flex" : "hidden"} flex-col items-center justify-center mt-0 bg-transparent-800 text-small p-4 w-full md:w-auto md:flex md:flex-row md:justify-between`}
       >
-        <Searchbar className="w-full sm:w-1/2 md:w-fit lg:w-fit " />
+        <SearchComponent className="w-full sm:w-1/2 md:w-fit lg:w-fit " />
         <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4">
           <FontAwesomeIcon icon={faUser} className=" mr-2" />
           <span className="text-sm">Account</span>
