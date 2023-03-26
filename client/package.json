@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "author": "Roqeeb Obadara",
   "license": "MIT",
+  "engines": {
+    "node": "18.15.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

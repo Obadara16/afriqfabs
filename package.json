@@ -4,6 +4,9 @@
   "description": "An ecommerce app",
   "author": "Roqeeb Obadara",
   "license": "MIT",
+  "engines": {
+    "node": "18.15.0"
+  },
   "dependencies": {
     "concurrently": "^7.0.0"
   },
