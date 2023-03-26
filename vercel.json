@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "client/package.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "buildCommand": "yarn build",
+          "outputDirectory": "build"
+        }
+      },
+      {
+        "src": "server/**",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "server/main.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "client/build/$1"
+      }
+    ]
+  }
+  
