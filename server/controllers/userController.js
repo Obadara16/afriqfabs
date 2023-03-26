@@ -31,55 +31,6 @@ const validator = require("validator")
 
 
 
-const changePassword = async (req, res) => {
-    const { oldPassword, newPassword } = req.body;
-  
-    try {
-        // Check if required fields are present
-        if (!oldPassword || !newPassword) {
-            throw Error("All fields are required");
-        }
-    
-        // Check if new password is strong enough
-        if (!validator.isStrongPassword(newPassword)) {
-            throw Error("Password not strong enough");
-        }
-    
-        // Get user ID from token in Authorization header
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            throw Error("Authorization header not present");
-        }
-        const token = authHeader.split(" ")[1];
-        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-        const userId = decodedToken._id;
-    
-        // Find user by ID
-        const user = await User.findById(userId);
-    
-        // Check if user exists
-        if (!user) {
-            throw Error("User does not exist");
-        }
-    
-        // Check if old password is correct
-        const isMatch = await bcrypt.compare(oldPassword, user.password);
-        if (!isMatch) {
-            throw Error("Old password is incorrect");
-        }
-    
-        // Hash new password and update user
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(newPassword, salt);
-        user.password = hash;
-        await user.save();
-    
-        res.status(200).json({ message: "Password changed successfully" });
-    } catch (error) {
-         res.status(400).json({ error: error.message });
-    }
-  };
-
  
 
   const updateUser = async (req, res) => {
@@ -172,11 +123,13 @@ const getUserStats = async (req, res) => {
   }
 };
 
+
+
+
 module.exports = {
   updateUser,
   deleteUser,
   getUserById,
   getAllUsers,
   getUserStats,
-  changePassword,
 };

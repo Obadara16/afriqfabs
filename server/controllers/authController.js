@@ -5,7 +5,7 @@ const validator = require("validator")
 const Verification = require("../models/verificationModel")
 const jwt = require("jsonwebtoken")
 const { v4: uuidv4 } = require('uuid');
-const { sendVerificationEmail } = require("../services/email.js");
+const { sendVerificationEmail, sendResetPasswordEmail } = require("../services/email.js");
 
 require("dotenv").config()
 
@@ -106,7 +106,7 @@ const registerUser = async(req, res) => {
     }
 }
 
-
+// Verify Email Controller
 const verifyEmail = async (req, res) => {
   try {
     const { verificationCode } = req.params;
@@ -138,6 +138,100 @@ const verifyEmail = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+    const { password } = req.body;
+    const resetToken = req.params.resetToken;
+    
+    try {
+      if (!resetToken || !password) {
+        throw Error("All fields are required");
+      }
+    
+      const user = await User.findOne({ resetToken });
+      if (!user) {
+        throw Error("Invalid reset token");
+      }
+    
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+    
+      user.password = hash;
+      user.resetToken = undefined;
+      await user.save();
+    
+      res.status(200).json({ message: "Password reset successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
+  
+  const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      if (!email) {
+        throw Error("Email is required");
+      }
+  
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw Error("User not found");
+      }
+  
+      const resetToken = uuidv4();
+  
+      user.resetToken = resetToken;
+      await user.save();
+  
+      const resetLink = `${process.env.BASE_URL}/reset/${resetToken}`;
+      await sendResetPasswordEmail(email, resetLink);
+  
+      res.status(200).json({
+        message: "A password reset email has been sent to your email address",
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+
+const changePassword = async (req, res) => {
+try {
+    // Get user ID from token in Authorization header
+    const userId = req.user._id;
+
+    // Check if old and new passwords are present
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) {
+    throw new Error("All fields are required");
+    }
+
+    // Check if new password is strong enough
+    if (!validator.isStrongPassword(newPassword)) {
+    throw new Error("Password not strong enough");
+    }
+
+    // Find user by ID and verify old password
+    const user = await User.findById(userId).select("+password");
+    if (!user) {
+    throw new Error("User not found");
+    }
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+    throw new Error("Old password is incorrect");
+    }
+
+    // Update user with new password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
+    user.password = hash;
+    await user.save();
+
+    res.status(200).json({ message: "Password changed successfully" });
+} catch (error) {
+    res.status(400).json({ error: error.message });
+}
+};
 
 
-module.exports = {loginUser, registerUser, verifyEmail}
+module.exports = {loginUser, registerUser, verifyEmail, resetPassword, forgotPassword, changePassword}

@@ -37,7 +37,10 @@ const authSchema = new Schema ({
     },
     img: {
         type: String
-    }
+    },
+    resetToken: {
+        type: String
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('User', authSchema)

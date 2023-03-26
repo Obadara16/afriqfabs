@@ -13,15 +13,22 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cloudinary": "^1.35.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",
     "faker": "^6.6.6",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.1",
+    "path": "^0.12.7",
     "paystack": "^2.0.1",
     "stripe": "^11.15.0",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

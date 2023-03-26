@@ -1,18 +1,30 @@
 const Product = require("../models/productModel");
 const Review = require("../models/reviewModel");
-const mongoose = require("mongoose")
+const multer = require("multer")
+const upload = require("../middlewares/multer")
+const cloudinary = require("../middlewares/cloudinary")
 
 // CREATE PRODUCT
 const createProduct = async(req, res) => {
-    const newProduct = new Product(req.body);
-    
     try {
-        const savedProduct = await newProduct.save();
-        res.status(200).json(savedProduct);
+      const result = await cloudinary.uploader.upload(req.file.path);
+      const newProduct = new Product({
+        title: req.body.title,
+        desc: req.body.desc,
+        img: result.secure_url, // use the secure_url returned from Cloudinary
+        categories: req.body.categories,
+        size: req.body.size,
+        color: req.body.color,
+        price: req.body.price,
+        inStock: req.body.inStock
+      });
+      const savedProduct = await newProduct.save();
+      res.status(200).json(savedProduct);
     } catch (err) {
-        res.status(400).json(err);
+      res.status(400).json(err);
     }
-}
+  };
+  
 
 // UPDATE PRODUCT
 const updateProduct = async(req, res) => {

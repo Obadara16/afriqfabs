@@ -2,10 +2,11 @@ const express =require("express")
 const router = express.Router()
 const {createProduct, getAllProducts, getSingleProduct, deleteProduct, updateProduct, createProductReview, getProductReview, updateProductReview} = require('../controllers/productController')
 const { requireAuth,  requireAuthAndAdmin } = require("../middlewares/requireAuth");
+const upload = require("../middlewares/multer")
 
 
 
-router.post('/', requireAuthAndAdmin, createProduct)
+router.post('/', requireAuthAndAdmin, upload.single('img'), createProduct)
 router.put('/:id', requireAuthAndAdmin, updateProduct)
 router.delete('/:id', requireAuthAndAdmin, deleteProduct)
 router.get('/find/:id', getSingleProduct)

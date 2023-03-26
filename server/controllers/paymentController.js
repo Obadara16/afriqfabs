@@ -1,4 +1,5 @@
 const paystack = require("paystack")(process.env.PAYSTACK_SECRET_KEY);
+const Payment = require("../models/paymentModel")
 
 processPayment = async (req, res) => {
   try {
@@ -9,6 +10,13 @@ processPayment = async (req, res) => {
       reference: reference,
       currency: "NGN",
     });
+    const newPayment = new Payment({
+      email: email,
+      amount: amount,
+      reference: reference,
+      status: "pending",
+    });
+    await newPayment.save();
     res.status(200).json(payment);
   } catch (err) {
     res.status(500).json({ error: err.message });
