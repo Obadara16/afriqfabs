@@ -1,79 +1,105 @@
-import styled from "styled-components";
-import { mobile } from "../responsive";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 40%;
-  padding: 20px;
-  background-color: white;
-  ${mobile({ width: "75%" })}
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-`;
-
-const Agreement = styled.span`
-  font-size: 12px;
-  margin: 20px 0px;
-`;
-
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-`;
+import { useState } from "react";
+import { login } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import CombinedNav from "../components/CombinedNav";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+  };
+
   return (
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button>CREATE</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <div className="">
+      <CombinedNav />
+      <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
+        <h1 className="text-2xl font-semibold">Sign Up</h1>
+        <p className="text-center">Kindly fill in your information below</p>
+        <form className="flex flex-col mt-4 w-1/3 gap-8">
+        <div className="relative">
+            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm bg-none px-3">
+              First Name
+            </label>
+            <input
+              className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500  focus:outline-none focus:shadow-outline-teal"
+              type="text"
+              id="firstName"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="relative">
+            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm bg-none px-3">
+              LastName
+            </label>
+            <input
+              className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500  focus:outline-none focus:shadow-outline-teal"
+              type="text"
+              id="lastName"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="relative">
+            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm bg-none px-3 z-">
+              Email
+            </label>
+            <input
+              className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500 focus:outline-none focus:shadow-outline-teal"
+              type="text"
+              id="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+
+          <div class="relative" >
+            <input
+              type="text"
+              class="peer block min-h-[auto] w-full rounded border-0 bg-neutral-100  border-custom-btn-green py-4 px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:bg-neutral-700 dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+              id="password"
+              placeholder="Password."
+              aria-label="editable input example"
+            />
+            <label
+              for="password"
+              class="absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+              >Password
+            </label>
+          </div>
+
+          <button
+            className={`w-full px-4 h-[54px] mt-2 rounded cursor-pointer ${
+              isFetching
+                ? "bg-gray-400 text-gray-900"
+                : "bg-custom-btn-green text-white"
+            }`}
+            disabled={isFetching}
+            onClick={handleClick}
+          >
+            {isFetching ? "Loading..." : "Login"}
+          </button>
+          <p className="text-center">
+            Already have an account ?{" "}
+            <Link
+              to="/login"
+              className="my-2 text-sm cursor-pointer text-custom-btn-green font-medium"
+            >
+              Login
+            </Link>
+          </p>
+          {/* {error && <span className="text-red-500">Something went wrong...</span>} */}
+        </form>
+      </div>
+      <Footer />
+    </div>
   );
 };
 

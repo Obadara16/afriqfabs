@@ -12,25 +12,21 @@ const Products = ({ cat, filters, sort, displayNo }) => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products"
+            ? `https://afrimart-backend.onrender.com/api/products?category=${cat}`
+            : "https://afrimart-backend.onrender.com/api/products"
         );
         setProducts(res.data);
-        console.log(res.data)
+        console.log(res.data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     };
     getProducts();
   }, [cat]);
 
-  
-
-  
-
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-11/12">
-      <div className="flex flex-wrap -mx-4 justify-between">
+    <div className="container mx-auto w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {cat
           ? products.map((item) => (
               <div
@@ -40,16 +36,14 @@ const Products = ({ cat, filters, sort, displayNo }) => {
                 <Product item={item} />
               </div>
             ))
-          : products
-              .slice(0, displayNo)
-              .map((item) => (
-                <div
-                  key={item._id}
-                  className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
-                >
-                  <Product item={item} />
-                </div>
-              ))}
+          : products.slice(0, displayNo).map((item) => (
+              <div
+                key={item._id}
+                className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
+              >
+                <Product item={item} />
+              </div>
+            ))}
       </div>
     </div>
   );

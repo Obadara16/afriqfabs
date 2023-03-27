@@ -1,106 +1,67 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { login } from "../redux/apiCalls";
-import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: white;
-  ${mobile({ width: "75%" })}
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-`;
-
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-  &:disabled {
-    color: green;
-    cursor: not-allowed;
-  }
-`;
-
-const Link = styled.a`
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
-`;
-
-const Error = styled.span`
-  color: red;
-`;
+import CombinedNav from "../components/CombinedNav";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { email, password });
   };
+
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button onClick={handleClick} disabled={isFetching}>
-            LOGIN
-          </Button>
-          {error && <Error>Something went wrong...</Error>}
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <div className="">
+      <CombinedNav/>
+      <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
+        <h1 className="text-2xl font-light">Login</h1>
+        <p className="text-center">Kindly enter your email and password</p>
+        <form className="flex flex-col mt-4 w-1/3 gap-8">
+          <div className="relative">
+            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm bg-none px-3">Email</label>
+            <input className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500  focus:outline-none focus:shadow-outline-teal" 
+            type="text"
+            id="email"
+            onChange={(e) => setEmail(e.target.value)} />
+          </div>
+
+          <div className="relative">
+            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm px-3">Password</label>
+            <input className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500 focus:outline-white focus:shadow-outline-teal" 
+              type="password"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-end">
+            <Link to="/forgot-password" className="text-sm cursor-pointer text-right">
+              Forgot Password  ?
+            </Link>
+          </div>
+
+          <button
+            className={`w-full px-4 h-[54px] mt-4 rounded cursor-pointer ${
+              isFetching ? "bg-gray-400 text-gray-900" : "bg-custom-btn-green text-white"
+            }`}
+            disabled={isFetching}
+            onClick={handleClick}
+          >
+            {isFetching ? "Loading..." : "Login"}
+          </button>
+          <p className="text-center">Don't have an account ? <Link to="/register" className="my-2 text-sm cursor-pointer text-custom-btn-green font-medium">
+            Sign Up
+          </Link></p>
+          {/* {error && <span className="text-red-500">Something went wrong...</span>} */}
+        </form>
+      </div>
+      <Footer/>
+    </div>
   );
 };
 

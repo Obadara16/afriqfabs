@@ -43,11 +43,11 @@ const Product = ({ item }) => {
 
   return (
     <Link to={`/product/${item._id}`}>
-      <div className="flex-1 min-w-[240px] min-h-[350px] relative bg-white">
+      <div className="flex-1 md:w-[300px] lg:w-[350px] min-h-fit relative mx-5  bg-white">
         <div className="bg-gray-300 bg-opacity-20 relative">
           <img
             src={item.img}
-            className="h-3/4 w-full relative"
+            className="h-[380px] w-full relative"
             alt={item.title}
             style={imageStyle}
             onMouseEnter={handleMouseEnter}
@@ -63,7 +63,7 @@ const Product = ({ item }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 bg-opacity-0 z-4">
+        <div className="flex flex-col gap-5 bg-opacity-0 z-4 pt-5">
           <div className="flex justify-between">
             <p className="text-black font-bold text-normal">PROD-001</p>
             <p className="text-green-500 font-bold text-normal">${item.price}<span className="text-xs pr-2">.99</span></p>
