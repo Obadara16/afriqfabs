@@ -9,9 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "server": "nodemon index.js",
-    "build": "yarn run vite build"
-    
+    "server": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -31,8 +29,7 @@
     "paystack": "^2.0.1",
     "stripe": "^11.15.0",
     "uuid": "^9.0.0",
-    "validator": "^13.9.0",
-    "vite": "^4.2.1"
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
