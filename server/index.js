@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use('/uploads', express.static('uploads'));
 
 
-const allowedOrigins = ['http://localhost:5000', 'http://localhost:3000'];
+const allowedOrigins = ['https://afrimart.onrender.com', 'https://afrimart-backend.onrender.com/api/' ];
 app.use(cors({
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
