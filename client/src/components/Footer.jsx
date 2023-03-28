@@ -14,12 +14,12 @@ import logo from "../assets/logo.svg"
 
 const Footer = () => {
   return (
-    <div class="relative bg-white">
-  <div class="h-20"></div> 
-  <div class="absolute top-0 left-0 h-full w-full overflow-hidden">
-    <div class="absolute h-full w-full top-0 left-0 bg-green-500 transform -rotate-45 -translate-x-2/3"></div>
+    <div className="relative bg-white">
+  <div className="h-20"></div> 
+  <div className="absolute top-0 left-0 h-full w-full overflow-hidden">
+    <div className="absolute h-full w-full top-0 left-0 bg-green-500 transform -rotate-45 -translate-x-2/3"></div>
   </div>
-  <div class="container mx-auto py-6 px-4">
+  <div className="container mx-auto py-6 px-4">
   <div className=" w-full mx-auto mt-20 border-t-2 border-custom-green border-opacity-60  ">
       <div className="w-11/12 mx-auto flex flex-wrap py-20">
         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 text-sm">
