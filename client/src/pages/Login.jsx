@@ -23,22 +23,16 @@ const Login = () => {
         <h1 className="text-2xl font-light">Login</h1>
         <p className="text-center">Kindly enter your email and password</p>
         <form className="flex flex-col mt-4 w-1/3 gap-8">
-          <div className="relative">
-            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm bg-none px-3">Email</label>
-            <input className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500  focus:outline-none focus:shadow-outline-teal" 
-            type="text"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)} />
+        <div className="relative">
+          <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-custom-btn-green appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-custom-btn-green peer" placeholder=" " />
+          <label htmlFor="email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-custom-basic-color dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-custom-btn-green peer-focus:dark:text-custom-btn-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
           </div>
 
-          <div className="relative">
-            <label className="absolute top-0 left-0 -mt-2 ml-3 text-black text-sm px-3">Password</label>
-            <input className="block w-full px-4 border border-custom-btn-green py-4 rounded-md focus:ring-teal-500 focus:outline-white focus:shadow-outline-teal" 
-              type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        <div className="relative">
+          <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-custom-btn-green appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-custom-btn-green peer" placeholder=" " />
+          <label htmlFor="password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-custom-basic-color dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-custom-btn-green peer-focus:dark:text-custom-btn-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Password</label>
+        </div>
+
           <div className="flex justify-end">
             <Link to="/forgot-password" className="text-sm cursor-pointer text-right">
               Forgot Password  ?

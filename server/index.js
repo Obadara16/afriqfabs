@@ -7,6 +7,8 @@ const orderRoutes = require("./routes/order")
 const paymentRoutes = require("./routes/payment")
 const productRoutes = require("./routes/product")
 const userRoutes = require("./routes/user")
+const categoryRoutes = require("./routes/category")
+const subCategoryRoutes = require("./routes/subcategory")
 const cors = require("cors")
 
 //Use express
@@ -24,7 +26,7 @@ app.use((req, res, next) => {
 app.use('/uploads', express.static('uploads'));
 
 
-const allowedOrigins = ['https://afrimart.onrender.com', 'https://afrimart-backend.onrender.com/api/', 'https://localhost:3000', 'https://localhost:5000' ];
+const allowedOrigins = ['https://afrimart.onrender.com', 'https://afrimart-backend.onrender.com/api/', 'http://localhost:3000', 'http://localhost:5000' ];
 app.use(cors({
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
@@ -62,3 +64,5 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/payments", paymentRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/categories", categoryRoutes)
+app.use("/api/subcategories", subCategoryRoutes)

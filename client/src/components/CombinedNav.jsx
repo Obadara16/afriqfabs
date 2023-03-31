@@ -1,12 +1,12 @@
 import React from 'react'
-import MenuBar from './MenuBar'
+import FlowMenu from './FlowMenu'
 import Navbar from './Navbar'
 
 const CombinedNav = () => {
   return (
     <div>
         <Navbar/>
-        <MenuBar/>
+        <FlowMenu/>
     </div>
   )
 }

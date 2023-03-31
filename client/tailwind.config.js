@@ -8,6 +8,7 @@ module.exports = {
     './src/**/*.tsx',
     './src/**/*.vue',
     './public/**/*.html',
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -16,6 +17,7 @@ module.exports = {
           'text-green': 'rgba(4, 161, 67, 0.6)',
           'btn-green': "#04A143",
           'brown': '#AA9580',
+          'basic-color': "#ECF1ED",
         },
       },
     },
@@ -30,5 +32,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }

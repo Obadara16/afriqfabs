@@ -13,14 +13,15 @@ import {
 import Success from "./pages/Success";
 import { useSelector } from "react-redux";
 
+
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
       <Routes path="/">
       <Route index element={<Home />} />
-          <Route path="/products/:category" element={<ProductList />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/products/:category/:subcategory?" element={<ProductList />} />
+          <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/success" element={<Cart />} />
           <Route path="/login" element={<Login />} />

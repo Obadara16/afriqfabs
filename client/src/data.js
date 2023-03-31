@@ -19,23 +19,80 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "SHIRT STYLE!",
-      cat:"women"
+      name: "African Wax Print",
+      cat: "african-wax-print",
+      heading: "Latest African Wax Print Collection",
+      text: "Explore awesome fabrics to suit that special occasion",
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
-      cat:"coat"
+      name: "George Fabric",
+      cat: "george-fabric",
+      heading: "African Premium Traditional Attire",
+      text: " Best premium aso oke fabrics to rock any event",
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
-      cat:"jeans"
+      name: "African Wax Print",
+      cat: "african-wax-print",
+      heading: "African Traditional Fabric",
+      text: " Best ankara fabrics to rock any event",
+    },
+    {
+      id: 4,
+      name: "Featured Products",
+      cat: "featured",
+      heading: "Featured Collection",
+      text: "Get 30% off from orders above $500 when you purchase our plain and pattern collection",
     },
   ];
+
+  export const colors = [
+    {
+      id: 1,
+      name: "all"
+    },
+    {
+      id: 2,
+      name: "blue"
+    },
+    {
+      id: 3,
+      name: "red"
+    },
+    {
+      id: 4,
+      name: "orange"
+    },
+    {
+      id: 5,
+      name: "green"
+    },
+    {
+      id: 6,
+      name: "turqouise"
+    },
+    {
+      id: 7,
+      name: "burgundy"
+    },
+    {
+      id: 8,
+      name: "brown"
+    },
+    {
+      id: 9,
+      name: "white"
+    },
+    {
+      id: 10,
+      name: "gold"
+    },
+    {
+      id: 11,
+      name: "teal"
+    },
+  ]
 
   export const popularProducts = [
     {

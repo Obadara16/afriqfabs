@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.svg";
 import SearchComponent from "./SearchComponent";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -39,9 +40,9 @@ const Navbar = () => {
         <SearchComponent className="w-full sm:w-1/2 md:w-fit lg:w-fit " />
         <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4">
           <FontAwesomeIcon icon={faUser} className=" mr-2" />
-          <span className="text-sm">Account</span>
+          <Link to="/register"><span className="text-sm">Account</span></Link>
         </div>
-        <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4">
+        <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4 whitespace-nowrap">
           <FontAwesomeIcon icon={faShoppingCart} className=" mr-2" />
           <span className="text-sm">Cart (0)</span>
         </div>
