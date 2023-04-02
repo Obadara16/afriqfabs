@@ -9,6 +9,7 @@ import {
 import logo from "../assets/logo.svg";
 import SearchComponent from "./SearchComponent";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -17,8 +18,13 @@ const Navbar = () => {
     setIsNavOpen(!isNavOpen);
   };
 
+  const totalQuantity = useSelector(state =>
+    state.cart.products.reduce((acc, curr) => acc + curr.quantity, 0)
+  );
+
+
   return (
-    <nav className="flex items-center justify-start mx-auto flex-wrap bg-transparent-800 p-4 w-full px-24">
+    <nav className="flex items-center justify-start mx-auto flex-wrap bg-transparent-800 p-2 w-[90%] px-[2.5%]">
       <div className="flex items-center flex-shrink-0 mr-6 ">
         <img src={logo} alt="logo" className="h-8 w-8" />
         <span className="font-semibold text-xl">
@@ -44,7 +50,7 @@ const Navbar = () => {
         </div>
         <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4 whitespace-nowrap">
           <FontAwesomeIcon icon={faShoppingCart} className=" mr-2" />
-          <span className="text-sm">Cart (0)</span>
+          <Link to="/cart"><span className="text-sm">Cart ({totalQuantity})</span></Link>
         </div>
       </div>
     </nav>

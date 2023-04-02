@@ -38,7 +38,7 @@ export default function FlowMenu() {
   const { categories, subcategories, setCategories, setSubcategories } = useCategoryAndSubcategory();
 
   return (
-    <div className="flex w-full justify-center mx-auto my-6 shadow-md py-4">
+    <div className="flex w-full justify-center mx-auto mt-0 shadow-md py-4">
       <nav className="w-11/12">
         <ul className="flex items-center w-11/12 mx-auto justify-between font-light">
             <li className="relative group px-3 py-2">
@@ -122,15 +122,15 @@ export default function FlowMenu() {
 
             
             <li className="relative group px-3 py-2">
-                        <Link to="african-style-inspiration" className="hover:opacity-50 cursor-pointer">African Style Inspiration</Link>
+                        <Link to="/african-style-inspiration" className="hover:opacity-50 cursor-pointer">African Style Inspiration</Link>
             </li>
 
             <li className="relative group px-3 py-2">
-                <Link to="about-us" className="hover:opacity-50 cursor-pointer">About Us</Link>
+                <Link to="/about-us" className="hover:opacity-50 cursor-pointer">About Us</Link>
             </li>
 
             <li className="relative group px-3 py-2">
-                <Link to="contact-us" className="hover:opacity-50 cursor-pointer">Contact Us</Link>
+                <Link to="/contact-us" className="hover:opacity-50 cursor-pointer">Contact Us</Link>
             </li>
             
         </ul>

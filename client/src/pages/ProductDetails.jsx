@@ -43,10 +43,10 @@ const ProductDetails = () => {
   };
 
   const handleClick = () => {
-    dispatch(
-      addProduct({ ...product, quantity, color, size })
-    );
-  };
+    const quantity = 1;
+    dispatch(addProduct({ product, quantity }));
+  }
+  
   return (
     <div className="w-full">
       <CombinedNav/>

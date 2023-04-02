@@ -59,7 +59,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 // Routes
 app.use("/api/auth", authRoutes)
-app.use("/api/carts", cartRoutes)
+app.use("/api/cart", cartRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/payments", paymentRoutes)
 app.use("/api/products", productRoutes)

@@ -55,7 +55,7 @@ const Register = () => {
           disabled={isFetching}
           onClick={handleClick}
         >
-          {isFetching ? "Loading..." : "Login"}
+          {isFetching ? "Loading..." : "Register"}
         </button>
         <p className="text-center">
           Already have an account ?{" "}

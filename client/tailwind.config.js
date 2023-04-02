@@ -8,7 +8,6 @@ module.exports = {
     './src/**/*.tsx',
     './src/**/*.vue',
     './public/**/*.html',
-    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -33,6 +32,5 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('flowbite/plugin')
   ],
 }

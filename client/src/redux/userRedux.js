@@ -5,7 +5,7 @@ const userSlice = createSlice({
   initialState: {
     currentUser: null,
     isFetching: false,
-    error: false,
+    error: null,
   },
   reducers: {
     loginStart: (state) => {
@@ -14,13 +14,53 @@ const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.isFetching = false;
       state.currentUser = action.payload;
+      state.error = null;
     },
-    loginFailure: (state) => {
+    loginFailure: (state, action) => {
       state.isFetching = false;
-      state.error = true;
+      state.error = action.payload;
+    },
+    logout: (state) => {
+      state.currentUser = null;
+    },
+    registerStart: (state) => {
+      state.isFetching = true;
+    },
+    registerSuccess: (state, action) => {
+      state.isFetching = false;
+      state.currentUser = action.payload;
+      state.error = null;
+    },
+    registerFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    },
+    getProfileStart: (state) => {
+      state.isFetching = true;
+    },
+    getProfileSuccess: (state, action) => {
+      state.isFetching = false;
+      state.currentUser = action.payload;
+      state.error = null;
+    },
+    getProfileFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
     },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
+export const {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  logout,
+  registerStart,
+  registerSuccess,
+  registerFailure,
+  getProfileStart,
+  getProfileSuccess,
+  getProfileFailure,
+} = userSlice.actions;
+
 export default userSlice.reducer;

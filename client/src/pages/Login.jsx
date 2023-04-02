@@ -8,12 +8,15 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false); // new state variable
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { email, password });
+    login(dispatch, { email, password })
+      .then(() => setIsSuccess(true))
+      .catch(() => setIsSuccess(false));
   };
 
   return (
@@ -21,6 +24,7 @@ const Login = () => {
       <CombinedNav/>
       <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
         <h1 className="text-2xl font-light">Login</h1>
+        {isSuccess && <span className="text-green-500">Login successful!</span>} {/* success message */}
         <p className="text-center">Kindly enter your email and password</p>
         <form className="flex flex-col mt-4 w-1/3 gap-8">
         <div className="relative">
