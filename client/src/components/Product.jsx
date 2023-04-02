@@ -47,11 +47,12 @@ const Product = ({ item }) => {
         <div className="bg-gray-300 bg-opacity-20 relative">
           <img
             src={item.img}
-            className="h-[200px] w-full relative"
+            className="h-[250px] w-full relative"
             alt={item.title}
             style={imageStyle}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            loading="lazy"
           />
           <div style={overlayStyle}></div>
           <div className="w-full h-full absolute top-0 left-0 z-3 flex items-center justify-center transition-all duration-500 cursor-pointer">
@@ -70,7 +71,7 @@ const Product = ({ item }) => {
           </div>
           <p className="text-black text-normal">{item.title}</p>
           <p className="text-black text-normal">{item.desc}</p>
-          <p className="text-black font-normal text-normal rounded-md border-blue-600 border-solid border-2 w-fit p-2 ">8 yards</p>
+          <p className="text-black font-normal text-normal rounded-md border-custom-btn-green border-solid border-2 w-fit p-2 ">8 yards</p>
         </div>
       </div>
     </Link>

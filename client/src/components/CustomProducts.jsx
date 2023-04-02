@@ -87,7 +87,7 @@ const CustomProducts = ({ cat, filters, sort, displayNo, featured, related }) =>
                         <div className="bg-gray-300 bg-opacity-20 relative">
                         <img
                             src={item.img}
-                            className="h-[200px] w-full relative"
+                            className="h-[250px] w-full relative"
                             alt={item.title}
                             style={imageStyle}
                             onMouseEnter={handleMouseEnter}

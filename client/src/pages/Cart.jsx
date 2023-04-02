@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { faPlus, faMinus, faTrash, faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus, faTrash, faDeleteLeft, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { userRequest } from "../requestMethods";
@@ -14,7 +14,6 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   console.log("this are the products in the cart", cart)
   const user = useSelector((state) => state.user.currentUser);
-  const quantity = useSelector(state=>state.cart.quantity)
   const totalQuantity = useSelector(state =>
     state.cart.products.reduce((acc, curr) => acc + curr.quantity, 0)
   );
@@ -119,7 +118,7 @@ const handleClearCart = () => {
                         <img src={img}  alt={title} className="w-32 h-32 mr-4"/>
                           <p>
                             <button onClick={() => handleRemove(_id)} className="text-red-600">
-                              <FontAwesomeIcon icon={faDeleteLeft}/><span className="pl-4">Delete</span>
+                            <FontAwesomeIcon icon={faTrashCan}/><span className="pl-4">Delete</span>
                             </button>
                           </p>
                       </div>
@@ -155,7 +154,7 @@ const handleClearCart = () => {
                 )
               } 
               )}
-                <div className="flex justify-end px-10 py-4"><button className="border border-red-500 px-5 rounded-sm py-2" onClick={handleClearCart}>Clear Cart</button></div>
+                <div className="flex justify-end px-10 py-4"><button className="border border-red-500 text-red-500 px-5 rounded-sm py-2" onClick={handleClearCart}><FontAwesomeIcon icon={faTrashCan} /><span className="pl-4">Clear Cart</span></button></div>
 
             </div>
             <div className="w-[23%]">
