@@ -7,6 +7,9 @@ const userSlice = createSlice({
     isFetching: false,
     error: null,
     message: null,
+    isForgotPasswordSuccess: false,
+    isResetPasswordSuccess: false,
+    verifyEmailSuccess: false,
   },
   reducers: {
     loginStart: (state) => {
@@ -51,6 +54,42 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.error = action.payload;
     },
+    forgotPasswordStart: (state) => {
+      state.isFetching = true;
+    },
+    forgotPasswordSuccess: (state, action) => {
+      state.isFetching = false;
+      state.isForgotPasswordSuccess = true;
+      state.message = action.payload.message;
+    },
+    forgotPasswordFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    },
+    resetPasswordStart: (state) => {
+      state.isFetching = true;
+    },
+    resetPasswordSuccess: (state, action) => {
+      state.isFetching = false;
+      state.isResetPasswordSuccess = true;
+      state.message = action.payload.message;
+    },
+    resetPasswordFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    },
+    verifyEmailStart: (state) => {
+      state.isFetching = true;
+    },
+    verifyEmailSuccess: (state, action) => {
+      state.isFetching = false;
+      state.verifyEmailSuccess = true;
+      state.message = action.payload.message;
+    },
+    verifyEmailFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -65,6 +104,15 @@ export const {
   getProfileStart,
   getProfileSuccess,
   getProfileFailure,
+  forgotPasswordStart,
+  forgotPasswordSuccess,
+  forgotPasswordFailure,
+  resetPasswordStart,
+  resetPasswordSuccess,
+  resetPasswordFailure,
+  verifyEmailStart,
+  verifyEmailSuccess,
+  verifyEmailFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;

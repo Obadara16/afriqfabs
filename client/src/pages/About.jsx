@@ -35,7 +35,7 @@ const About = () => {
             </div>
             
         </div>
-        <div className="w-[85%] mx-auto flex flex-col">
+        <div className="w-[85%] mx-auto flex flex-col gap-16">
             <div className="flex flex-col">
             <p className="text-base leading-7">
             "Welcome to AfriqFabs, your one-stop-shop for all your fabric needs! We're a family-owned business that's been providing high-quality fabrics to our customers for over 20 years. Our mission is to offer a wide range of fabrics that are both stylish and practical, at prices that won't break the bank.
@@ -45,11 +45,11 @@ const About = () => {
                 Thank you for choosing AfriqFabs for your fabric needs. We look forward to serving you!"
             </p>
             </div>
-            <div className="flex gap-16 md:flex-wrap md:flex-row-reverse md:mt-40 items-center">
-            <div className="flex-1">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16">
+            <div className="">
                 <img src={visionimg} className="w-full h-full" alt="Our Vision" />
             </div>
-            <div className="flex-1">
+            <div className="">
                 <div className="flex flex-col">
                 <h3 className="font-bold">Our Vision</h3>
                 <p className="text-base leading-7">
@@ -58,11 +58,11 @@ const About = () => {
                 </div>
             </div>
             </div>
-            <div className="flex gap-16 md:flex-wrap md:mt-16 items-center">
-                <div className="flex-1">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16">
+                <div className="">
                     <img src={missionimg} className="w-full h-full" alt="Our Mission" />
                 </div>
-                <div className="flex-1">
+                <div className="">
                     <div className="flex flex-col">
                 <h3 className="font-bold">Our Mission</h3>
                 <p className="text-base leading-7">
@@ -72,8 +72,8 @@ const About = () => {
             </div>
             
             </div>
-            <div className="flex gap-16 md:flex-wrap md:mt-16 items-center">
-            <div className="flex-1">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16">
+            <div className="">
                 <div className="flex flex-col">
                 <h3 className="font-bold">Our Goals </h3>
                 <p className="text-base leading-7">
@@ -81,15 +81,15 @@ const About = () => {
                 </p>
                 </div>
             </div>
-            <div className="flex-1">
+            <div className="">
                 <img src={goalimg} className="w-full h-full" alt="Our Goals" />
             </div>
             </div>
-            <div className="flex gap-16 md:flex-wrap md:mt-16 items-center">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16">
                 <div className="flex-1">
                     <img src={approachimg} className="w-full h-full" alt="Our Approach" />
                 </div>
-                <div className="flex-1">
+                <div className="">
                     <div className="flex flex-col">
                 <h3 className="font-bold">Our Approach</h3>
                 <p className="text-base leading-7">

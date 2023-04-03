@@ -30,19 +30,11 @@ const Success = () => {
   }, [cart, data, currentUser]);
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div className="h-screen flex flex-col items-center justify-center">
       {orderId
         ? `Order has been created successfully. Your order number is ${orderId}`
         : `Successfull. Your order is being prepared...`}
-      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+      <button className="px-4 py-2 mt-4">Go to Homepage</button>
     </div>
   );
 };

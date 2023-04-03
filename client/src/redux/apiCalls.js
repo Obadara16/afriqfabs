@@ -9,6 +9,15 @@ import {
   getProfileFailure,
   getProfileStart,
   getProfileSuccess,
+  forgotPasswordStart,
+  forgotPasswordSuccess,
+  forgotPasswordFailure,
+  resetPasswordStart,
+  resetPasswordSuccess,
+  resetPasswordFailure,
+  verifyEmailStart,
+  verifyEmailSuccess,
+  verifyEmailFailure,
 } from "./userRedux";
 import { publicRequest } from "../requestMethods";
 
@@ -23,15 +32,17 @@ export const login = async (dispatch, user) => {
   }
 };
 
-export const logoutUser = async (dispatch) => {
-  try {
-    // call the logout API here
-    // ...
+export const logoutUser = () => {
+  return async (dispatch) => {
+    try {
+      // call the logout API here
+      // ...
 
-    dispatch(logout());
-  } catch (err) {
-    console.log(err);
-  }
+      dispatch(logout());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 };
 
 export const registerUser = async (dispatch, user) => {
@@ -51,6 +62,36 @@ export const getProfile = async (dispatch) => {
     dispatch(getProfileSuccess(res.data));
   } catch (err) {
     dispatch(getProfileFailure(err.message));
+  }
+};
+
+export const forgotPassword = (email) => async (dispatch) => {
+  dispatch(forgotPasswordStart());
+  try {
+    const res = await publicRequest.post("/auth/forgot-password", { email });
+    dispatch(forgotPasswordSuccess(res.data));
+  } catch (err) {
+    dispatch(forgotPasswordFailure(err.message));
+  }
+};
+
+export const resetPassword = (resetData) => async (dispatch) => {
+  dispatch(resetPasswordStart());
+  try {
+    const res = await publicRequest.post("/auth/reset-password", resetData);
+    dispatch(resetPasswordSuccess(res.data));
+  } catch (err) {
+    dispatch(resetPasswordFailure(err.message));
+  }
+};
+
+export const verifyEmail = (verificationCode) => async (dispatch) => {
+  dispatch(verifyEmailStart());
+  try {
+    const res = await publicRequest.post("/auth/verify-email", { verificationCode });
+    dispatch(verifyEmailSuccess(res.data));
+  } catch (err) {
+    dispatch(verifyEmailFailure(err.message));
   }
 };
 

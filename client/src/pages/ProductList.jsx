@@ -54,11 +54,11 @@ const ProductList = () => {
               </select>
             </div>
           </div>
-          <div className="flex justify-between">
-            <div className="w-[15%]">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+            <div className="col-span-1">
               <CategorySidebar/>
             </div>
-            <div className="w-[80%]">
+            <div className="col-span-3">
               <Products cat={cat} filters={filters} sort={sort} displayNo={3} subcat={subcat} />
             </div>
           </div>

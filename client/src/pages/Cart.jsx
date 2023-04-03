@@ -20,7 +20,12 @@ import {
   clearCart,
 } from "../redux/cartRedux";
 import logo from "../assets/logo.svg"
-const KEY = import.meta.env.VITE_STRIPE_SECRET_KEY;
+
+
+import { loadStripe } from '@stripe/stripe-js/pure';
+const KEY = "sk_test_51LPIVnI8iL9AvZS5cEDZJKZIzcmZslAxU2XoBKYCTEaMBIh8NbWCPx9Bj5GX8CN3ZWBVUGF1nwDFbFz8WL3E8Ohu00Ghi24cDn";
+
+
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -78,12 +83,12 @@ const Cart = () => {
         {cart.products.length === 0 ? (
           <p>Your cart is empty</p>
         ) : (
-          <div className="w-full flex justify-between">
-            <div className="bg-white w-[75%]">
-              <div className="flex justify-between  bg-white shadow-sm px-6 py-4 border-b-1 border-custom-btn-green text-center">
-                <h2 className="font-bold w-[30%]">Products</h2>
-                <h2 className="font-bold w-[30%]">Quantity</h2>
-                <h2 className="font-bold w-[30%]">Total</h2>
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white col-span-3">
+              <div className="grid grid-cols-3  bg-white shadow-sm px-6 py-4 border-b-1 border-custom-btn-green text-center">
+                <h2 className="font-bold col-span-1">Products</h2>
+                <h2 className="font-bold col-span-1">Quantity</h2>
+                <h2 className="font-bold col-span-1">Total</h2>
               </div>
               {cart.products.map((product) => {
                 const {
@@ -100,7 +105,7 @@ const Cart = () => {
                     key={_id}
                     className="flex justify-between my-4 px-6 bg-white "
                   >
-                    <div className="flex items-center w-[30%]">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[30%]">
                       <div className="flex flex-col gap-5">
                         <img src={img} alt={title} className="w-32 h-32 mr-4" />
                         <p>
@@ -160,7 +165,7 @@ const Cart = () => {
                 </button>
               </div>
             </div>
-            <div className="w-[23%]">
+            <div className="col-span-1">
               <div className=" bg-white px-2 h-fit pb-2">
                 <div className="flex justify-between  bg-white shadow-sm py-4 border-b-1 border-custom-btn-green">
                   <h2 className="font-bold">Cart Summary</h2>
@@ -191,6 +196,7 @@ const Cart = () => {
                   amount={cart.total * 100}
                   token={onToken}
                   stripeKey={KEY}
+                  className="w-full"
                 >
                   <button className="bg-custom-btn-green paystack-button text-white font-md py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4 w-full">
                     Proceed to Checkout
@@ -198,8 +204,8 @@ const Cart = () => {
                 </StripeCheckout>
               ) : (
                 <button
-                  className="bg-custom-btn-green text-white font-bold py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4"
-                  onClick={() => history.push("/login")}
+                  className="bg-custom-btn-green text-white font-bold py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4 w-full"
+                  onClick={() => navigate("/login")}
                 >
                   Login to Checkout
                 </button>

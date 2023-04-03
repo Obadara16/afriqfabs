@@ -40,7 +40,7 @@ export default function FlowMenu() {
   return (
     <div className="flex w-full justify-center mx-auto mt-0 shadow-md py-4">
       <nav className="w-11/12">
-        <ul className="flex items-center w-11/12 mx-auto justify-between font-light">
+        <ul className="md:flex items-center w-11/12 mx-auto justify-between font-light sm:flex-wrap">
             <li className="relative group px-3 py-2">
                       <button className="hover:opacity-50 cursor-default">NGN</button>
                       <div
@@ -95,11 +95,11 @@ export default function FlowMenu() {
 
             <li className="relative group px-3 py-2">
                 <span className="hover:opacity-50 cursor-default">Fabric Collections</span>
-                <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[960px] transform">
+                <div className="absolute top-0 sm:-left-0 md:-left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 sm:w-[480px] md:w-[600px]  transform">
                     <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
                         <div className="relative z-10">
-                            <div className="grid grid-cols-4 justify-items-stretch">
+                            <div className="flex gap-3 justify-between">
                             {categories.map((category, index) => (
                             <div key={category._id} className="flex flex-col gap-4">
                                 <Link to={`/products/${category.slug}`} className="font-semibold ">{category.name}</Link>

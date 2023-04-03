@@ -35,9 +35,9 @@ const CategorySidebar = () => {
   
   return (
     <div className='flex flex-col gap-10'>
-        <div className='flex flex-col text-center'>
+        <div className='flex flex-col'>
             <h3 className='text-bold pb-3'>Category</h3>
-            <div className='bg-white flex flex-col'>
+            <div className='bg-white w-fit px-4 flex flex-col'>
                 <Link to={`/products/${catSlug}`}><p className='capitalize p-3 hover:text-custom-btn-green'>{originalText}</p></Link>
                 {subCategories.map((subCategory) => (
                     <div className='' key={subCategory._id}>
@@ -51,8 +51,8 @@ const CategorySidebar = () => {
             </div>
         </div>
         <div className=' mb-10'>
-            <h3 className='text-bold text-center pb-3'>Color</h3>
-            <div className='bg-white flex flex-col'>
+            <h3 className='text-bold pb-3'>Color</h3>
+            <div className='bg-white w-fit px-4 flex flex-col'>
                 <CustomCheckBox/>
             </div>
         </div>

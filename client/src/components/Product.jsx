@@ -1,7 +1,5 @@
 import {
   FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -42,9 +40,9 @@ const Product = ({ item }) => {
   };
 
   return (
-    <Link to={`/product/${item.slug}`}>
-      <div className="flex-1 min-w-[240px] h-fit relative bg-white">
-        <div className="bg-gray-300 bg-opacity-20 relative">
+    <Link to={`/product/${item.slug}`} className= "w-full">
+      <div className="h-fit  w-full relative bg-white">
+        <div className="bg-gray-300  w-full bg-opacity-20 relative">
           <img
             src={item.img}
             className="h-[250px] w-full relative"
@@ -57,7 +55,7 @@ const Product = ({ item }) => {
           <div style={overlayStyle}></div>
           <div className="w-full h-full absolute top-0 left-0 z-3 flex items-center justify-center transition-all duration-500 cursor-pointer">
             <div
-              className={`w-10 h-10 rounded-full bg-gray-400 text-${isFavorite ? `green-500` : "white"} flex items-center justify-center m-0 transition-all duration-500 z-99 transform hover:scale-110 absolute top-4 right-4`}
+              className={`w-10 h-10 rounded-full bg-gray-400 text-${isFavorite ? `green-500` : `white`} flex items-center justify-center m-0 transition-all duration-500 z-99 transform hover:scale-110 absolute top-4 right-4`}
               onClick={handleFavoriteClick}
             >
               <FavoriteBorderOutlined />

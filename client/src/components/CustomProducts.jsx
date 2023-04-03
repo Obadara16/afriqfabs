@@ -76,14 +76,14 @@ const CustomProducts = ({ cat, filters, sort, displayNo, featured, related }) =>
 
   return (
     <div className="container w-full">
-      <div className="flex -mx-4 justify-between">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {products.slice(0, displayNo).map((item) => (
               <div
                 key={item._id}
-                className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/3 p-4"
+                className="w-full p-4"
               >
-                <Link to={`/product/${item.slug}`}>
-                    <div className="flex-1 min-w-[240px] h-fit relative bg-white">
+                <Link to={`/product/${item.slug}`} className="w-full">
+                    <div className="w-full h-fit relative bg-white">
                         <div className="bg-gray-300 bg-opacity-20 relative">
                         <img
                             src={item.img}

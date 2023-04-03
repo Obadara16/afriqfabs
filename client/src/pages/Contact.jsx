@@ -47,15 +47,15 @@ const Contact = () => {
                 <p className="text-center">Email; <span>afriqfabs@gmail.com</span></p>
                 <p className="text-center">Address; <span>18,ori-oke bustop, Offin-Ile, Igbogbo,Lagos State</span></p>
                 <div className="w-11/12 mx-auto py-6 mt-10">
-                    <form className="w-1/2 mx-auto">
+                    <form className="sm:w-full md:w-1/2 mx-auto">
                     <div className="flex flex-col gap-4">
-                        <div className="flex justify-between w-full">
-                            <div className="relative w-[45%]">
+                        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                            <div className="relative sm:w-full md:w-full">
                                 <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} className="block px-2.5 pb-2.5 pt-4 w-full text-sm  rounded-lg border border-custom-text-green  dark:focus:border-custom-btn-green  focus:border-custom-btn-green" placeholder=" " />
                                 <label htmlFor="email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-custom-basic-color px-2 peer-focus:px-2 peer-focus:text-custom-btn-green peer-focus:dark:text-custom-btn-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
                             </div>
 
-                            <div className="relative w-[45%]">
+                            <div className="relative sm:w-full md:w-full">
                                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border border-custom-btn-green appearance-none dark:text-white  dark:focus:border-custom-btn-green focus:outline-none focus:ring-0 focus:border-custom-btn-green peer" placeholder=" " />
                                 <label htmlFor="password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-custom-basic-color px-2 peer-focus:px-2 peer-focus:text-custom-btn-green peer-focus:dark:text-custom-btn-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Password</label>
                             </div>

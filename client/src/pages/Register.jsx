@@ -36,7 +36,7 @@ const Register = () => {
       <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
         <h1 className="text-2xl font-semibold">Sign Up</h1>
         <p className="text-center">Kindly fill in your information below</p>
-        <form className="flex flex-col mt-4 w-1/3 gap-8">
+        <form className="flex flex-col mt-4 sm-w-full md:w-1/3 gap-8">
 
         <div className="relative">
           <input type="text" id="firstName" onChange={(e) => setFirstName(e.target.value)} className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-custom-btn-green appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-custom-btn-green peer" placeholder=" " />
