@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
-import { PaystackButton } from "react-paystack";
+import PaystackButton from 'react-paystack';
 import CombinedNav from "../components/CombinedNav";
 import Footer from "../components/Footer";
 import { removeProduct, increaseQuantity, decreaseQuantity, clearCart } from "../redux/cartRedux";

@@ -15,7 +15,8 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["react-paystack"],
+      preserveModules: true,
+      external: ['react-paystack'],
     },
   },
 });
