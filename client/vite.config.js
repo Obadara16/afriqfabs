@@ -13,4 +13,9 @@ export default defineConfig({
     // this will allow dynamic require statements in faker to work correctly
     // remove this if you are not using faker or similar libraries
   },
+  build: {
+    rollupOptions: {
+      external: ["react-paystack"],
+    },
+  },
 });
