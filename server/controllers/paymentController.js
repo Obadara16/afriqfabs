@@ -1,23 +1,23 @@
-const paystack = require("paystack")(process.env.PAYSTACK_SECRET_KEY);
-const Payment = require("../models/paymentModel")
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Payment = require("../models/paymentModel");
 
 processPayment = async (req, res) => {
   try {
-    const { reference, amount, email } = req.body;
-    const payment = await paystack.transaction.initialize({
-      email: email,
-      amount: amount * 100, // Paystack requires the amount to be in kobo (i.e. multiplied by 100)
-      reference: reference,
-      currency: "NGN",
+    const { amount, email } = req.body;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100, // Stripe requires the amount to be in cents (i.e. multiplied by 100)
+      currency: "usd",
+      payment_method_types: ["card"],
+      receipt_email: email,
     });
     const newPayment = new Payment({
       email: email,
       amount: amount,
-      reference: reference,
+      reference: paymentIntent.id,
       status: "pending",
     });
     await newPayment.save();
-    res.status(200).json(payment);
+    res.status(200).json({ client_secret: paymentIntent.client_secret });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
