@@ -60,11 +60,11 @@ const loginUser = async(req, res) => {
 }
 
 const registerUser = async(req, res) => {
-    const {email, password} = req.body
+    const {firstName, lastName, email, password} = req.body
 
     try {
 
-        if(!email || !password) {
+        if(!firstName || !lastName || !email || !password) {
             throw Error("All fields are required")
         }
     
@@ -85,7 +85,7 @@ const registerUser = async(req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        const newUser = await User.create({email, password: hash})
+        const newUser = await User.create({firstName, lastName, email, password: hash})
 
         // Generate a unique verification code/token
         const verificationCode = uuidv4();

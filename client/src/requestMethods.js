@@ -12,11 +12,11 @@ const TOKEN = currentUser?.token
 console.log(TOKEN)
 
 export const publicRequest = axios.create({
-  baseURL: TEST_URL,
+  baseURL: BASE_URL,
 });
 
 export const userRequest = axios.create({
-  baseURL: TEST_URL,
+  baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${TOKEN}`,
   },

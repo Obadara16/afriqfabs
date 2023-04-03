@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { login } from "../redux/apiCalls";
+import { login, registerUser } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import CombinedNav from "../components/CombinedNav";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { registerFailure } from "../redux/userRedux";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,11 +13,22 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
+  const [isSuccess, setIsSuccess] = useState(false); // new state variable
+  const [message, setMessage] = useState(""); // new state variable
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    registerUser(dispatch, {firstName, lastName, email, password })
+      .then((res) => {// view the response in the browser console
+        
+      })
+      .catch((err) => {
+        dispatch(registerFailure(err));
+        console.log(err)
+        setIsSuccess(false);
+      });
   };
+
 
   return (
     <div className="">
