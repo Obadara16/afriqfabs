@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ForgotPassword from "./pages/ForgotPassword";
+import Gallery from "./pages/Gallery";
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
+          <Route path="/gallery:slug" element={<Gallery />} />
       </Routes>
     </Router>
   );

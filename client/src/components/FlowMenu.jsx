@@ -42,50 +42,14 @@ export default function FlowMenu() {
       <nav className="w-11/12">
         <ul className="md:flex items-center w-11/12 mx-auto justify-between font-light sm:flex-wrap">
             <li className="relative group px-3 py-2">
-                      <button className="hover:opacity-50 cursor-default">NGN</button>
-                      <div
-                          className="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
-                          <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                          <div
-                              className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm">
-                          </div>
-                          <div className="relative z-10">
-                              <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">SELECT CURRENCY</p>
-                              <ul className="mt-3 text-[15px]">
-                              <li>
-                                  <button
-                                  className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block">
-                                  NGN
-                                  </button>
-                              </li>
-                              <li>
-                                  <button
-                                  className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block">
-                                  USD
-                                  </button>
-                              </li>
-                              <li>
-                                  <button
-                                  className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block">
-                                  GPB
-                                  </button>
-                              </li>
-                              <li>
-                                  <button
-                                  className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block">
-                                YEN
-                                  </button>
-                              </li>
-                              <li>
-                                  <button
-                                  className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block">
-                                  CND
-                                  </button>
-                              </li>
-                              </ul>
-                          </div>
-                          </div>
-                      </div>
+                <div className="m-4 flex flex-col">
+                    <select onChange={(e) => setSort(e.target.value)} className="p-2">
+                        <option value="NGN">NGN</option>
+                        <option value="USD">USD</option>
+                        <option value="GBP">GBP</option>
+                        <option value="YEN">YEN</option>
+                    </select>
+                </div>
             </li>
 
             <li className="relative group px-3 py-2">

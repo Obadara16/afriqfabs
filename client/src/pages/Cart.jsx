@@ -105,7 +105,7 @@ const Cart = () => {
                     key={_id}
                     className="flex justify-between my-4 px-6 bg-white "
                   >
-                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[30%]">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-[30%]">
                       <div className="flex flex-col gap-5">
                         <img src={img} alt={title} className="w-32 h-32 mr-4" />
                         <p>
@@ -165,7 +165,7 @@ const Cart = () => {
                 </button>
               </div>
             </div>
-            <div className="col-span-1">
+            <div className="md:col-span-1">
               <div className=" bg-white px-2 h-fit pb-2">
                 <div className="flex justify-between  bg-white shadow-sm py-4 border-b-1 border-custom-btn-green">
                   <h2 className="font-bold">Cart Summary</h2>

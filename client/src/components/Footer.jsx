@@ -21,7 +21,7 @@ const Footer = () => {
   </div> */}
   <div className="container mx-auto py-6 px-4">
   <div className=" w-full mx-auto mt-20 border-t-2 border-custom-btn-green border-opacity-60  ">
-      <div className="w-11/12 mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20">
+      <div className="w-11/12 mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-20">
         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 text-sm">
           <p className="flex justify-center align-center h-[60px]"><img src={logo} alt="logo" height={60}/><span className="text-xl font-bold font-oleo ">Afriq<span className="text-green-500">Fabs</span>.</span></p>
           <p className="mb-4">

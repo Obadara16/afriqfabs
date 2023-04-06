@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import aboutbackground from "../assets/aboutus.svg";
-import visionimg from "../assets/visionimg.svg";
-import missionimg from "../assets/missionimg.svg";
-import goalimg from "../assets/goalimg.svg";
-import approachimg from "../assets/approachimg.svg";
-import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import CombinedNav from "../components/CombinedNav";
+import Header from "../components/Header";
 
 const Contact = () => {
     const [email, setEmail] = useState("");
@@ -25,21 +21,7 @@ const Contact = () => {
   return (
     <>
         <CombinedNav/>
-        <div
-            className="bg-cover bg-black bg-no-repeat flex justify-center items-center mb-20 h-[300px] bg-black opacity-120"
-            style={{ backgroundImage: `url(${aboutbackground})` }}
-        >
-            <div className="w-max flex justify-center">
-                
-            <div className="text-center">
-                <h1 className="text-white">About Us</h1>
-                <h4 className="text-white hidden md:block">
-                Authenticity is our Watchword
-                </h4>
-            </div>
-            </div>
-            
-        </div>
+        <Header/>
         <div className="w-[85%] mx-auto flex flex-col">
             <div className="flex flex-col">
                 <p className="text-center">Do you have any questions or complaints? We are  here Monday - Friday  ( 8am - 10pm EST) just for you. </p>
