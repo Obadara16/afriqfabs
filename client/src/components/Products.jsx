@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { popularProducts } from "../data";
 import Product from "./Product";
 import axios from "axios";
-import { TEST_URL } from "../requestMethods";
+import { BASE_URL } from "../requestMethods";
 
 const Products = ({
   cat,
@@ -18,7 +18,7 @@ const Products = ({
   useEffect(() => {
     const getProducts = async () => {
       try {
-        let endpoint = `${TEST_URL}products`;
+        let endpoint = `${BASE_URL}products`;
         if (cat) {
           endpoint += `?categorySlug=${cat}`;
         } else if (featured) {

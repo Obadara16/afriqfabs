@@ -6,7 +6,7 @@ import {
     ShoppingCartOutlined,
   } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { TEST_URL } from "../requestMethods";
+import { BASE_URL } from "../requestMethods";
 
 const CustomProducts = ({ cat, filters, sort, displayNo, featured, related }) => {
   const [products, setProducts] = useState([]);
@@ -48,7 +48,7 @@ const CustomProducts = ({ cat, filters, sort, displayNo, featured, related }) =>
   useEffect(() => {
     const getProducts = async () => {
       try {
-        let endpoint = `${TEST_URL}products`;
+        let endpoint = `${BASE_URL}products`;
         if (cat) {
           endpoint += `?categorySlug=${cat}`;
         } else if (featured) {

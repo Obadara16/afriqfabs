@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { colors } from '../data';
 import CustomCheckBox from '../partials/CustomCheckBox';
-import { TEST_URL } from '../requestMethods';
+import { BASE_URL } from '../requestMethods';
 
 
 const CategorySidebar = () => {

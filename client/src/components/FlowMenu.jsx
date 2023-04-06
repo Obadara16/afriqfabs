@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useCategoryAndSubcategory from '../hooks/UseCategoryAndSubCategory';
-import { TEST_URL } from '../requestMethods';
+import { BASE_URL } from '../requestMethods';
 
 export default function FlowMenu() {
   const [expandedIndex, setExpandedIndex] = useState(-1);
@@ -10,7 +10,7 @@ export default function FlowMenu() {
   useEffect(() => {
     const getSubcategories = async (slug) => {
       try {
-        const endpoint = `${TEST_URL}subcategories?parentCategorySlug=${slug}`;
+        const endpoint = `${BASE_URL}subcategories?parentCategorySlug=${slug}`;
         const res = await axios.get(endpoint);
         return res.data;
       } catch (err) {
@@ -21,7 +21,7 @@ export default function FlowMenu() {
 
     const getCategories = async () => {
       try {
-        const endpoint = `${TEST_URL}categories`;
+        const endpoint = `${BASE_URL}categories`;
         const res = await axios.get(endpoint);
         setCategories(res.data);
         const subcategoriesList = await Promise.all(

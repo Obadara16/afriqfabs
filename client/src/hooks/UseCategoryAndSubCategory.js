@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const TEST_URL = "http://localhost:5000/api/";
+const BASE_URL = "http://localhost:5000/api/";
 
 export default function useCategoryAndSubcategory() {
   const [categories, setCategories] = useState([]);
@@ -11,7 +11,7 @@ export default function useCategoryAndSubcategory() {
   useEffect(() => {
     const getSubcategories = async (slug) => {
       try {
-        const endpoint = `${TEST_URL}subcategories?parentCategorySlug=${slug}`;
+        const endpoint = `${BASE_URL}subcategories?parentCategorySlug=${slug}`;
         const res = await axios.get(endpoint);
         return res.data;
       } catch (err) {
@@ -22,7 +22,7 @@ export default function useCategoryAndSubcategory() {
   
     const getCategories = async () => {
       try {
-        const endpoint = `${TEST_URL}categories`;
+        const endpoint = `${BASE_URL}categories`;
         const res = await axios.get(endpoint);
         setCategories(res.data);
         const subcategoriesList = await Promise.all(
