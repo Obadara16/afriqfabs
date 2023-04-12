@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "../requestMethods";
 
-const BASE_URL = "http://localhost:5000/api/";
+const BASE_URL = `${BASE_URL}`;
 
 export default function useCategoryAndSubcategory() {
   const [categories, setCategories] = useState([]);

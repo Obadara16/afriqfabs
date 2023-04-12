@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_URL } from '../requestMethods';
 
 // const API_BASE_URL = 'http://localhost:5000/api';
-const API_BASE_URL = 'https://afrimart-backend.onrender.com/api/';
+const API_BASE_URL = `${BASE_URL}`;
 
 
 // Check if the user is authenticated before making API requests
