@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CombinedNav from "../components/CombinedNav";
@@ -7,6 +7,7 @@ import { forgotPassword } from "../redux/apiCalls";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import Alert from "../components/Alert";
 
 const schema = yup.object().shape({
   email: yup
@@ -17,9 +18,12 @@ const schema = yup.object().shape({
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const { isFetching, isForgotPasswordSuccess, error } = useSelector(
-    (state) => state.user
-  );
+  const { isFetching, error, success } = useSelector((state) => state.user);
+
+  const [alerting, setAlerting] = useState({
+    color: "",
+    data: "",
+  });
 
   const {
     handleSubmit,
@@ -33,15 +37,29 @@ const ForgotPassword = () => {
     dispatch(forgotPassword(data.email));
   };
 
+
+  useEffect(() => {
+    if (success) {
+      
+      setAlerting({
+        color: "success",
+        data: success,
+      });
+    } else {
+      setAlerting({ color: "danger", data: error });
+    }
+  }, [success, error]);
+
+  
+
   return (
     <div className="">
       <CombinedNav />
       <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
-      <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4"></div>
         <h1 className="text-2xl font-light">Recover Password ?</h1>
         <p className="text-center">Kindly provide your email</p>
-        {isForgotPasswordSuccess ? (
-          <p>An email has been sent to your email address.</p>
+        {success ? (
+          <p>{success}</p>
         ) : (
           <form
             className="flex flex-col mt-4 w-1/3 gap-8"
@@ -66,15 +84,25 @@ const ForgotPassword = () => {
               </label>
             </div>
 
-            <button
+
+            <div className="flex flex-col">
+              {!(success === null) &&
+                <Alert color={`custom-btn-green`} data={alerting.data} />
+              }
+              {!(error === null) &&
+                <Alert color={`red-500`} data={alerting.data} />
+              }
+              <button
                 className={`w-full px-4 h-[54px] mt-4 rounded cursor-pointer ${
-                isFetching ? "bg-gray-400 text-gray-900" : "bg-green-500 text-white"
+                  isFetching
+                    ? "bg-gray-400 text-gray-900"
+                    : "bg-custom-btn-green text-white"
                 }`}
                 disabled={isFetching}
-            >
+              >
                 {isFetching ? "Loading..." : "Submit"}
-            </button>
-
+              </button>
+            </div>
           </form>
         )}
       </div>
@@ -82,5 +110,6 @@ const ForgotPassword = () => {
     </div>
   );
 };
+
 
 export default ForgotPassword;

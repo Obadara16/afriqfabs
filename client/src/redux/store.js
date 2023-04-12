@@ -32,6 +32,16 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  devTools: process.env.NODE_ENV !== "production",
+  preloadedState: {}, // Set an empty initial state
+  manualPersist: true, // Enable manual rehydration
 });
 
 export let persistor = persistStore(store);
+
+// Manually rehydrate the store
+if (persistor) {
+  persistor.persist(() => {
+    console.log("store rehydrated!");
+  });
+}

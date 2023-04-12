@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login, registerUser } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import CombinedNav from "../components/CombinedNav";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { registerFailure } from "../redux/userRedux";
+import Alert from "../components/Alert";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,22 +13,32 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
-  const [isSuccess, setIsSuccess] = useState(false); // new state variable
-  const [message, setMessage] = useState(""); // new state variable
+  const { isFetching, error, success } = useSelector((state) => state.user);
+  const [alerting, setAlerting] = useState({
+    color: "",
+    data: "",
+  });
 
-  const handleClick = (e) => {
+ 
+  const handleClick = async (e) => {
     e.preventDefault();
-    registerUser(dispatch, {firstName, lastName, email, password })
-      .then((res) => {// view the response in the browser console
-        
-      })
-      .catch((err) => {
-        dispatch(registerFailure(err));
-        console.log(err)
-        setIsSuccess(false);
-      });
+    
+    await registerUser(dispatch, {firstName, lastName, email, password });
+  
+
   };
+
+  useEffect(() => {
+    if (success) {
+      
+      setAlerting({
+        color: "success",
+        data: success,
+      });
+    } else {
+      setAlerting({ color: "danger", data: error });
+    }
+  }, [success, error]);
 
 
   return (
@@ -58,17 +69,25 @@ const Register = () => {
           <label htmlFor="password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-custom-basic-color dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-custom-btn-green peer-focus:dark:text-custom-btn-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Password</label>
         </div>
  
-        <button
-          className={`w-full px-4 h-[54px] mt-2 rounded cursor-pointer ${
-            isFetching
-              ? "bg-gray-400 text-gray-900"
-              : "bg-custom-btn-green text-white"
-          }`}
-          disabled={isFetching}
-          onClick={handleClick}
-        >
-          {isFetching ? "Loading..." : "Register"}
-        </button>
+        <div className="flex flex-col">
+            {!(success === null) &&
+              <Alert color={`custom-btn-green`} data={alerting.data} />
+            }
+            {!(error === null) &&
+              <Alert color={`red-500`} data={alerting.data} />
+            }
+            <button
+              className={`w-full px-4 h-[54px] mt-4 rounded cursor-pointer ${
+                isFetching
+                  ? "bg-gray-400 text-gray-900"
+                  : "bg-custom-btn-green text-white"
+              }`}
+              disabled={isFetching}
+              onClick={handleClick}
+            >
+              {isFetching ? "Loading..." : "Register"}
+            </button>
+          </div>
         <p className="text-center">
           Already have an account ?{" "}
           <Link
@@ -78,7 +97,9 @@ const Register = () => {
             Login
           </Link>
         </p>
-          {/* {error && <span className="text-red-500">Something went wrong...</span>} */}
+          {/* {error && <span className="text-red-500">{error}</span>}
+          {success && <p>{success.message}</p>} */}
+
       </form>
       </div>
     <Footer />

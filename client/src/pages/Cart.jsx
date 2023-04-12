@@ -19,13 +19,10 @@ import {
   decreaseQuantity,
   clearCart,
 } from "../redux/cartRedux";
-import logo from "../assets/logo.svg"
+import logo from "../assets/logo.svg";
 
-
-import { loadStripe } from '@stripe/stripe-js/pure';
-const KEY = "sk_test_51LPIVnI8iL9AvZS5cEDZJKZIzcmZslAxU2XoBKYCTEaMBIh8NbWCPx9Bj5GX8CN3ZWBVUGF1nwDFbFz8WL3E8Ohu00Ghi24cDn";
-
-
+import { loadStripe } from "@stripe/stripe-js/pure";
+const KEY = "sk_test_51LPIVnI8iL9AvZS5cEDZJKZIzcmZslAxU2XoBKYCTEaMBIh8NbWCPx9Bj5GX8CN3ZWBVUGF1nwDFbFz8WL3E8Ohu00Ghi24cDn"
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);

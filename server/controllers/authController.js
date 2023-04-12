@@ -59,52 +59,55 @@ const loginUser = async(req, res) => {
     }
 }
 
-const registerUser = async(req, res) => {
-    const {firstName, lastName, email, password} = req.body
+const registerUser = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
 
-    try {
-
-        if(!firstName || !lastName || !email || !password) {
-            throw Error("All fields are required")
-        }
-    
-        if(!validator.isEmail(email)) {
-            throw Error("Email is not valid")
-        }
-    
-        if(!validator.isStrongPassword(password)) {
-            throw Error("Password not strong Enough")
-        }
-
-
-        const exists = await User.findOne({email})
-        if (exists) {
-            throw Error("User already exists")
-        }
-
-        const salt = await bcrypt.genSalt(10)
-        const hash = await bcrypt.hash(password, salt)
-
-        const newUser = await User.create({firstName, lastName, email, password: hash})
-
-        // Generate a unique verification code/token
-        const verificationCode = uuidv4();
-
-        // Save the verification code/token and the email address in a verification collection/table
-        await Verification.create({ email, code: verificationCode });
-
-        // Send a verification email to the user's email address with a link containing the verification code/token
-        const verificationLink = `${process.env.BASE_URL}/verify/${verificationCode}`;
-        await sendVerificationEmail(email, verificationLink);
-
-        res.status(200).json({
-          message: "A verification email has been sent to your email address",
-        });
-
-    } catch (error) {
-        res.status(400).json({error: error.message})
+  try {
+    if (!firstName || !lastName || !email || !password) {
+      throw new Error("All fields are required");
     }
-}
+
+    if (!validator.isEmail(email)) {
+      throw new Error("Email is not valid");
+    }
+
+    if (!validator.isStrongPassword(password)) {
+      throw new Error("Password not strong enough");
+    }
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      throw new Error("Email already in use");
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const newUser = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hash,
+    });
+
+    // Generate a unique verification code/token
+    const verificationCode = uuidv4();
+
+    // Save the verification code/token and the email address in a verification collection/table
+    await Verification.create({ email, code: verificationCode });
+
+    // Send a verification email to the user's email address with a link containing the verification code/token
+    const verificationLink = `${process.env.BASE_URL}/verify/${verificationCode}`;
+    await sendVerificationEmail(email, verificationLink);
+
+    res.status(200).json({
+      message: "A verification email has been sent to your email address",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 // Verify Email Controller
 const verifyEmail = async (req, res) => {
@@ -171,12 +174,12 @@ const resetPassword = async (req, res) => {
   
     try {
       if (!email) {
-        throw Error("Email is required");
+        return res.status(400).json({ message: "Email is required" });
       }
   
       const user = await User.findOne({ email });
       if (!user) {
-        throw Error("User not found");
+        return res.status(404).json({ message: "User not found" });
       }
   
       const resetToken = uuidv4();
@@ -191,9 +194,11 @@ const resetPassword = async (req, res) => {
         message: "A password reset email has been sent to your email address",
       });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      console.error(error);
+      res.status(500).json({ message: "An error occurred while trying to forget password" });
     }
   };
+  
 
 const changePassword = async (req, res) => {
 try {

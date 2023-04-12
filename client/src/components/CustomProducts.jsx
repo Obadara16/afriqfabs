@@ -76,7 +76,7 @@ const CustomProducts = ({ cat, filters, sort, displayNo, featured, related }) =>
 
   return (
     <div className="container w-full">
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-${displayNo}`}>
         {products.slice(0, displayNo).map((item) => (
               <div
                 key={item._id}

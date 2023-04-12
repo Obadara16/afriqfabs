@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css"
 import ProductDetails from "./pages/ProductDetails";
 import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
@@ -16,13 +17,15 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ForgotPassword from "./pages/ForgotPassword";
 import Gallery from "./pages/Gallery";
+import { ToastContainer } from "react-toastify";
+
 
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user)
   return (
     <Router>
+      <ToastContainer/>
       <Routes path="/">
       <Route index element={<Home />} />
           <Route path="/products/:category?/:subcategory?" element={<ProductList />} />

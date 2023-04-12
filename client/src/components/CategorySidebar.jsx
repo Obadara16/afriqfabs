@@ -17,9 +17,9 @@ const CategorySidebar = () => {
   useEffect(() => {
     const getSubCategories = async () => {
       try {
-        let endpoint = `${TEST_URL}categories`;
+        let endpoint = `${BASE_URL}categories`;
         if (catSlug) {
-          endpoint = `${TEST_URL}subcategories?parentCategorySlug=${catSlug}`;
+          endpoint = `${BASE_URL}subcategories?parentCategorySlug=${catSlug}`;
         }
         const res = await axios.get(endpoint);
         setSubCategories(res.data);

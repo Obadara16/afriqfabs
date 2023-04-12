@@ -6,6 +6,7 @@ import { BASE_URL } from '../requestMethods';
 
 export default function FlowMenu() {
   const [expandedIndex, setExpandedIndex] = useState(-1);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     const getSubcategories = async (slug) => {
@@ -41,9 +42,9 @@ export default function FlowMenu() {
     <div className="flex w-full justify-center mx-auto mt-0 shadow-md py-4">
       <nav className="w-11/12">
         <ul className="md:flex items-center w-11/12 mx-auto justify-between font-light sm:flex-wrap">
-            <li className="relative group px-3 py-2">
-                <div className="m-4 flex flex-col">
-                    <select onChange={(e) => setSort(e.target.value)} className="p-2">
+            <li className="relative group px-3">
+                <div className="flex flex-col">
+                    <select onChange={(e) => setSort(e.target.value)} className="px-2 w-fit">
                         <option value="NGN">NGN</option>
                         <option value="USD">USD</option>
                         <option value="GBP">GBP</option>

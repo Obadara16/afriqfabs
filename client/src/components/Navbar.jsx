@@ -59,49 +59,48 @@ const Navbar = () => {
         <SearchComponent className="w-full md:w-fit lg:w-fit " />
         {user ? 
             <nav className="w-full">
-            <ul className="md:flex items-center w-full mx-auto justify-between font-light sm:flex-wrap">
-                <li className="relative group px-3 py-2">
-                          <button className="hover:opacity-50 cursor-default">Account</button>
-                          <div
-                              className="absolute top-0  transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 w-[200px] transform">
-                              <div className="relative top-6 px-4 py-2 bg-white rounded-sm shadow-xl w-fit">
-                              <div
-                                  className="w-2 h-2 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm">
-                              </div>
-                              <div className="relative z-10 flex flex-col gap-9 justify-between">
-                                  <ul className="mt-3 text-[15px]">
-                                    <li>
-                                        <Link to="/profile"
-                                        className="flex items-center  py-2">
-                                          <FontAwesomeIcon icon={faUser} className="text-green-500 p-1"/><span className="pl-2"> My Profile</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/orders"
-                                        className="flex items-center text-black py-2">
-                                          <FontAwesomeIcon icon={faBagShopping} className= "text-green-500 p-1"/><span className="pl-2"> My Orders</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/favorite"
-                                        className="flex items-center text-black py-2">
-                                          <FontAwesomeIcon icon={faHeart} className="text-green-500 p-1"/><span className="pl-2"> My Favorite</span>
-                                        </Link>
-                                    </li>
-                                  </ul>
-                                  <div>
+            <div className="md:flex items-center w-full mx-auto justify-between font-light sm:flex-wrap">
+              <div className="relative group px-3 py-2">
+                        <button className="hover:opacity-50 cursor-default">Account</button>
+                        <div
+                            className="absolute top-0  transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 w-[200px] transform">
+                            <div className="relative top-6 px-4 py-2 bg-white rounded-sm shadow-xl w-fit">
+                            <div
+                                className="w-2 h-2 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm">
+                            </div>
+                            <div className="relative z-10 flex flex-col gap-9 justify-between">
+                                <ul className="mt-3 text-[15px]">
                                   <li>
-                                        <button className="text-red-500" onClick={handleLogout}>
-                                        <FontAwesomeIcon icon={faArrowRightFromBracket} /><span className="pl-2">Logout</span>
-                                        </button>
-                                    </li>
-                                  </div>
-                              </div>
-                              </div>
-                          </div>
-                </li>
-                
-            </ul>
+                                      <Link to="/profile"
+                                      className="flex items-center  py-2">
+                                        <FontAwesomeIcon icon={faUser} className="text-green-500 p-1"/><span className="pl-2"> My Profile</span>
+                                      </Link>
+                                  </li>
+                                  <li>
+                                      <Link to="/orders"
+                                      className="flex items-center text-black py-2">
+                                        <FontAwesomeIcon icon={faBagShopping} className= "text-green-500 p-1"/><span className="pl-2"> My Orders</span>
+                                      </Link>
+                                  </li>
+                                  <li>
+                                      <Link to="/favorite"
+                                      className="flex items-center text-black py-2">
+                                        <FontAwesomeIcon icon={faHeart} className="text-green-500 p-1"/><span className="pl-2"> My Favorite</span>
+                                      </Link>
+                                  </li>
+                                </ul>
+                                <div>
+                                <li>
+                                      <button className="text-red-500" onClick={handleLogout}>
+                                      <FontAwesomeIcon icon={faArrowRightFromBracket} /><span className="pl-2">Logout</span>
+                                      </button>
+                                  </li>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+              </div>    
+            </div>
           </nav>
           :
           <div className="text-black flex items-center mt-4 md:mt-0 md:ml-4">

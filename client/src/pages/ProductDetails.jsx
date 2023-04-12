@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct, decreaseQuantity, increaseQuantity } from "../redux/cartRedux";
 import { useDispatch, useSelector } from "react-redux";
-import MenuBar from "../components/MenuBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClover, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Products from "../components/Products";

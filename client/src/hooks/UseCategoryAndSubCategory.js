@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../requestMethods";
 
-const BASE_URL = `${BASE_URL}`;
 
 export default function useCategoryAndSubcategory() {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-  const [parentCategorySlug, setParentCategorySlug] = useState(null);
 
   useEffect(() => {
     const getSubcategories = async (slug) => {

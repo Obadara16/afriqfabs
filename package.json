@@ -11,7 +11,8 @@
     "concurrently": "^7.0.0",
     "react-paystack": "^4.0.2",
     "react-progressive-bg-image": "^3.0.0",
-    "react-stripe-checkout": "^2.6.3"
+    "react-stripe-checkout": "^2.6.3",
+    "react-toastify": "^9.1.2"
   },
   "scripts": {
     "start": "yarn concurrently \"cd ./server && yarn run server\" \"cd ./client && yarn run dev\"",

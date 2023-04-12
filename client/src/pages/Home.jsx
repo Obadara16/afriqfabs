@@ -27,7 +27,7 @@ const Home = () => {
             </h3>
             <p className="text-center">{category.text}</p>
             {category.cat === "featured" ? (
-              <CustomProducts featured={category.cat} displayNo={4} />
+              <CustomProducts featured={category.cat} displayNo={3} />
             ) : (
               <Products cat={category.cat} displayNo={3} />
             )}
