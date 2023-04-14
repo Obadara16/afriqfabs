@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct, decreaseQuantity, increaseQuantity } from "../redux/cartRedux";
@@ -19,8 +19,8 @@ const ProductDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,24 +35,21 @@ const ProductDetails = () => {
 
 
   const handleClick = () => {
-    const quantity = 1;
     dispatch(addProduct({ product, quantity }));
+    navigate("/cart")
   }
 
-  const handleIncrease = (_id) => {
-    console.log(id)
-    dispatch(increaseQuantity(_id));
-}
+  const handleDecrease = (_id) => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
-const handleDecrease = (_id) => {
-  dispatch(decreaseQuantity(_id));
-}
+  const handleIncrease = (_id) => {
+    setQuantity(quantity + 1);
+  };
 
   const {_id, img, title, desc, price, productSlug } = product;
-
-  const alreadyInCart = cart.products.some((product) => product._id === _id);
-  const quantity = cart.products.filter((product) => product._id === _id)[0]?.quantity;
-
 
   
   return (
@@ -85,25 +82,23 @@ const handleDecrease = (_id) => {
               <span className="font-light mr-2">Size:</span>
               <p className="text-black font-normal text-normal rounded-md border-custom-btn-green border-solid border-2 w-fit p-2 ">{quantity? 8*quantity : "8"} yards</p>
             </div>
+            <div className="flex flex-col gap-3 my-7">
+              <span className="font-light mr-2">Quantity:</span>
+              <div className="flex items-center border border-gray-400 w-fit">
+                <Remove className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleDecrease(_id)} />
+                <span className="px-3">{quantity}</span>
+                <Add className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleIncrease(_id)} />
+              </div>
+            </div>
             <div>
-                {alreadyInCart ? (
-                  <div className="flex flex-col gap-3 my-7">
-                    <span className="font-light mr-2">Quantity:</span>
-                    <div className="flex items-center border border-gray-400 w-fit">
-                      <Remove className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleDecrease(_id)} />
-                      <span className="px-3">{quantity}</span>
-                      <Add className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleIncrease(_id)} />
-                    </div>
-                  </div>
-                ) : (
-                <div className="flex justify-between my-10 gap-3">
+                <div className="flex my-10 gap-4">
                 <button className="bg-custom-btn-green hover:bg-custom-brown h-[54px] hover:text-black text-white font-light px-8 py-4 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 sm:text-[12px] md:text-[16px] whitespace-nowrap hover:scale-110" onClick={handleClick}>Add to Cart    .     {price}.00</button>
-                <div className="border border-custom-btn-green border-opacity-60 flex items-center justify-center gap-2 w-[100px] py-4 px-4 rounded-md flex-nowrap">
+                <div className="border border-custom-btn-green border-opacity-60 flex items-center justify-center w-[100px] h-[54px] gap-4 py-4 px-4 rounded-md flex-nowrap">
                   <FontAwesomeIcon icon={faClover}/>
                   <span className="text-black">194</span>
                 </div>
               </div>
-                )}
+
               </div>
           </div>
         </section>
