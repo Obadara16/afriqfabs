@@ -34,12 +34,11 @@ export const store = configureStore({
     }),
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: {}, // Set an empty initial state
-  manualPersist: true, // Enable manual rehydration
 });
 
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);
 
-// Manually rehydrate the store
+// Use the persistor instance to manually rehydrate the store
 if (persistor) {
   persistor.persist(() => {
     console.log("store rehydrated!");

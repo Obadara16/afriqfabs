@@ -17,8 +17,7 @@ const SearchComponent = ({className}) => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button
-        className="px-4 py-2 font-semibold w-fit  text-white bg-green-500 rounded-r-lg hover:bg-green-600 focus:outline-none focus:shadow-outline"
-        type="submit"
+        className="px-4 py-2 font-semibold w-fit  text-white bg-custom-btn-green rounded-r-lg hover:bg-green-600 focus:outline-none focus:shadow-outline"
       >
         Search
       </button>

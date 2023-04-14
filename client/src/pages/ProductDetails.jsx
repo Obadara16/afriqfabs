@@ -1,4 +1,4 @@
-import { Add, Remove } from "@material-ui/icons";
+import { Add, FavoriteBorderOutlined, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -9,7 +9,7 @@ import { publicRequest } from "../requestMethods";
 import { addProduct, decreaseQuantity, increaseQuantity } from "../redux/cartRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClover, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClover, faHeart, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Products from "../components/Products";
 import CombinedNav from "../components/CombinedNav";
 
@@ -60,19 +60,19 @@ const ProductDetails = () => {
         <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-16 ">
           <div className="col-span-2 md:flex h-fit">
             <div className="flex flex-col justify-center gap-4 h-fit md:w-1/3 sm:w-full">
-              <img className="w-full md:w-[100%] h-[180px]" src={img} alt={title}/>
-              <img className="w-full md:w-[100%] h-[180px]" src={img} alt={title}/>
-              <img className="w-full md:w-[100%] h-[180px] transform -rotate-180" src={img} alt={title}/>
+              <img className="w-full md:w-[100%] h-[124px]" src={img} alt={title}/>
+              <img className="w-full md:w-[100%] h-[124px]" src={img} alt={title}/>
+              <img className="w-full md:w-[100%] h-[124px] transform -rotate-180" src={img} alt={title}/>
             </div>
             <div className="flex sm:w-full md:w-2/3 justify-center sm:pt-4 md:pt-0 md:px-4 h-full">
               <img className=" sm:w-full md:min-[380px] object-cover md:h-[480px] " src={img} alt={title} />
             </div>
           </div>
-          <div className="col-span-1 p-0 px-24 flex flex-col justify-center">
-            <h1 className="font-light">{title}</h1>
-            <p className="my-7">{desc}</p>
-            <span className="text-2xl font-light my-7">$ {price}</span>
-            <div className="flex flex-col items-start gap-3 my-7">
+          <div className="col-span-1 p-0 px-24 flex flex-col gap-6 justify-center">
+            <h1 className="font-bold">{title}</h1>
+            <p className="font-semibold italic">{desc}</p>
+            <span className="text-xl font-semibold text-custom-btn-green">$ {price}.<span className="text-xs align-baseline">00</span></span>
+            <div className="flex flex-col items-start gap-3">
               <span className="font-light ">Color:</span>
               {/* {map((c) => (
                 <div className={`w-5 h-5 rounded-full border border-gray-400 pl-4 cursor-pointer ${color === c && 'border-teal-500'}`} style={{ backgroundColor: c }} onClick={() => setColor(c)} key={c}></div>
@@ -82,20 +82,20 @@ const ProductDetails = () => {
               <span className="font-light mr-2">Size:</span>
               <p className="text-black font-normal text-normal rounded-md border-custom-btn-green border-solid border-2 w-fit p-2 ">{quantity? 8*quantity : "8"} yards</p>
             </div>
-            <div className="flex flex-col gap-3 my-7">
+            <div className="flex flex-col gap-3">
               <span className="font-light mr-2">Quantity:</span>
               <div className="flex items-center border border-gray-400 w-fit">
-                <Remove className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleDecrease(_id)} />
+                <Remove className="cursor-pointer text-black border border-b-gray-400" onClick={() => handleDecrease(_id)} style={{bg: "#D9D9D9"}} />
                 <span className="px-3">{quantity}</span>
-                <Add className="cursor-pointer bg-custom-text-green text-white" onClick={() => handleIncrease(_id)} />
+                <Add className="cursor-pointer  text-black border border-b-gray-400" onClick={() => handleIncrease(_id)} style={{bg: "#D9D9D9"}}/>
               </div>
             </div>
             <div>
-                <div className="flex my-10 gap-4">
+                <div className="flex gap-4">
                 <button className="bg-custom-btn-green hover:bg-custom-brown h-[54px] hover:text-black text-white font-light px-8 py-4 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 sm:text-[12px] md:text-[16px] whitespace-nowrap hover:scale-110" onClick={handleClick}>Add to Cart    .     {price}.00</button>
-                <div className="border border-custom-btn-green border-opacity-60 flex items-center justify-center w-[100px] h-[54px] gap-4 py-4 px-4 rounded-md flex-nowrap">
-                  <FontAwesomeIcon icon={faClover}/>
-                  <span className="text-black">194</span>
+                <div className="border border-custom-btn-green border-opacity-60 flex items-center justify-center w-[100px] h-[54px] gap-4 py-4 px-4 rounded-md flex-nowrap font-light">
+                  <FavoriteBorderOutlined />
+                  <span className="text-black font-light">194</span>
                 </div>
               </div>
 

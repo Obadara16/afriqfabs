@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 const initialState = {
   products: localStorage.getItem("carts")
@@ -8,6 +8,7 @@ const initialState = {
     : [],
   quantity: 0,
   total: 0,
+  shouldSync: false, // Add a shouldSync value to the state
 };
 
 const cartSlice = createSlice({
@@ -15,6 +16,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct(state, action) {
+      // Set shouldSync to true when the cart is updated
+      state.shouldSync = true;
+
       const { product, quantity } = action.payload;
       const existingProduct = state.products.find((p) => p._id === product._id);
       if (existingProduct) {
@@ -26,19 +30,14 @@ const cartSlice = createSlice({
         state.products.push({ ...product, quantity });
         toast.success("Added a new product to cart", {
           position: "top-right",
-        })
+        });
       }
       state.total += product.price * quantity;
-      if (state.isUserAuthenticated) {
-        axios
-          .post("/api/cart", { carts: state.products })
-          .then(() => console.log("Cart updated on server"))
-          .catch((error) => console.log(error));
-      } else {
-        localStorage.setItem("carts", JSON.stringify(state.products));
-      }
     },
     increaseQuantity(state, action) {
+      // Set shouldSync to true when the cart is updated
+      state.shouldSync = true;
+
       const { _id } = action.payload;
       console.log(action.payload);
       const productIndex = state.products.findIndex(
@@ -54,97 +53,63 @@ const cartSlice = createSlice({
           0
         );
         state.total = parseFloat(newTotalAmount.toFixed(2));
-
-        // toast.info("Increased product quantity", {
-        //   position: "top-right",
-        // });
-      }
-
-      if (state.isUserAuthenticated) {
-        axios
-          .post("/api/cart", { carts: state.products })
-          .then(() => console.log("Cart updated on server"))
-          .catch((error) => console.log(error));
-      } else {
-        localStorage.setItem("carts", JSON.stringify(state.products));
-      }
-    },
-    decreaseQuantity(state, action) {
-      const { _id } = action.payload;
-      const productIndex = state.products.findIndex(
-        (product) => product._id === action.payload
-      );
-
-      if (state.products[productIndex].quantity > 1) {
-        state.products[productIndex].quantity -= 1;
-
-        const product = state.products[productIndex];
-        state.total -= product.price;
-
-        // toast.info("Decreased product quantity", {
-        //   position: "top-right",
-        // });
-      } else if (state.products[productIndex].quantity === 1) {
-        const removedProduct = state.products[productIndex];
-        state.products.splice(productIndex, 1);
-        state.total -= removedProduct.price;
-
-        toast.error("Product removed from cart", {
-          position: "top-right",
-        });
-      }
-
-      if (state.isUserAuthenticated) {
-        axios
-          .post("/api/cart", { carts: state.products })
-          .then(() => console.log("Cart updated on server"))
-          .catch((error) => console.log(error));
-      } else {
-        localStorage.setItem("carts", JSON.stringify(state.products));
-      }
-    },
-    removeProduct(state, action) {
-      const { _id } = action.payload;
-      state.products.map((product) => {
-        if (product._id === action.payload) {
-          const nextcarts = state.products.filter(
-            (product) => product._id !== action.payload
+        }
+      },
+      decreaseQuantity(state, action) {
+        // Set shouldSync to true when the cart is updated
+        state.shouldSync = true;
+      
+        const { _id } = action.payload;
+        console.log(action.payload);
+        const productIndex = state.products.findIndex(
+          (product) => product._id === action.payload
+        );
+      
+        if (state.products[productIndex].quantity > 1) {
+          state.products[productIndex].quantity -= 1;
+      
+          // Recalculate total amount based on updated quantity
+          const newTotalAmount = state.products.reduce(
+            (total, product) => total + product.price * product.quantity,
+            0
           );
-
-          state.products = nextcarts;
-          state.total -= product.price * product.quantity;
-
-          if (state.products === null) {
-            quantity: 0;
-          }
-
-          toast.error("Product removed from cart", {
+          state.total = parseFloat(newTotalAmount.toFixed(2));
+        } else {
+          // Remove the product from the cart if quantity is 0
+          state.products.splice(productIndex, 1);
+        }
+      },
+      removeProduct(state, action) {
+        // Set shouldSync to true when the cart is updated
+        state.shouldSync = true;
+      
+        const productId = action.payload;
+        const productIndex = state.products.findIndex(
+          (product) => product._id === productId
+        );
+      
+        if (productIndex !== -1) {
+          const product = state.products[productIndex];
+          const productTotal = product.price * product.quantity;
+      
+          state.total -= productTotal;
+          state.quantity -= product.quantity;
+          state.products.splice(productIndex, 1);
+      
+          toast.error("Removed product from cart", {
             position: "top-right",
           });
         }
-        if (state.isUserAuthenticated) {
-          axios
-            .post("/api/cart", { carts: state.products })
-            .then(() => console.log("Cart updated on server"))
-            .catch((error) => console.log(error));
-        } else {
-          localStorage.setItem("carts", JSON.stringify(state.products));
-        }
-        return state;
-      });
-    },
+      },
+      
     clearCart(state) {
+      // Set shouldSync to true when the cart is updated
+      state.shouldSync = true;
+    
       state.products = [];
       state.quantity = 0;
       state.total = 0;
       localStorage.removeItem("carts");
-
-      if (state.isUserAuthenticated) {
-        axios
-          .post("/api/cart", { carts: state.products })
-          .then(() => console.log("Cart cleared on server"))
-          .catch((error) => console.log(error));
-      }
     },
   },
 });
@@ -157,5 +122,21 @@ export const {
 
   clearCart,
 } = cartSlice.actions;
+
+// Define an asynchronous thunk action to sync the cart data with the server
+export const syncCart = () => async (dispatch, getState) => {
+  try {
+    const { cart } = getState();
+    const response = await axios.post("/api/cart", cart.products);
+    if (response.status === 200) {
+      dispatch({ type: "cart/setShouldSync", payload: false });
+      localStorage.removeItem("carts");
+    }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+    
+
 
 export default cartSlice.reducer;

@@ -35,6 +35,7 @@
     "flowbite-react": "^0.4.2",
     "immer": "^9.0.21",
     "javascript-time-ago": "^2.5.9",
+    "jwt-decode": "^3.1.2",
     "primeicons": "^6.0.1",
     "primereact": "^9.2.2",
     "react": "^17.0.2",
