@@ -95,7 +95,7 @@ const ProductDetails = () => {
                 <button className="bg-custom-btn-green hover:bg-custom-brown h-[54px] hover:text-black text-white font-light px-8 py-4 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 sm:text-[12px] md:text-[16px] whitespace-nowrap hover:scale-110" onClick={handleClick}>Add to Cart    .     {price}.00</button>
                 <div className="border border-custom-btn-green border-opacity-60 flex items-center justify-center w-[100px] h-[54px] gap-4 py-4 px-4 rounded-md flex-nowrap font-light">
                   <FavoriteBorderOutlined />
-                  <span className="text-black font-light">194</span>
+                  <span className="text-black font-light">192</span>
                 </div>
               </div>
 
