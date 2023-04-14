@@ -81,7 +81,7 @@ const Cart = () => {
           <p>Your cart is empty</p>
         ) : (
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white col-span-3">
+            <div className="bg-white sm:col-span-full md:col-span-full lg:col-span-3">
               <div className="grid grid-cols-3  bg-white shadow-sm px-6 py-4 border-b-1 border-custom-btn-green text-center">
                 <h2 className="font-bold col-span-1">Products</h2>
                 <h2 className="font-bold col-span-1">Quantity</h2>
@@ -102,9 +102,9 @@ const Cart = () => {
                     key={_id}
                     className="flex justify-between my-4 px-6 bg-white "
                   >
-                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-[30%]">
-                      <div className="flex flex-col gap-5">
-                        <img src={img} alt={title} className="w-32 h-32 mr-4" />
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[30%]">
+                      <div className="flex flex-col gap-5 w-full">
+                        <img src={img} alt={title} className="w-[240px] h-62 mr-4" />
                         <p>
                           <button
                             onClick={() => handleRemove(_id)}
@@ -124,7 +124,7 @@ const Cart = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center mt-2 w-[30%]">
+                    <div className="flex justify-center mt-10 w-[30%]">
                       <button
                         className="bg-gray-200 w-8 h-8 flex justify-center items-center"
                         onClick={() => handleDecrease(_id)}
@@ -144,7 +144,7 @@ const Cart = () => {
                       </button>
                     </div>
 
-                    <div className="w-[30%] flex justify-center items-center">
+                    <div className="w-[30%] flex justify-center mt-10">
                       <h2 className="font-semibold text-md text-custom-btn-green">
                         ${price * quantity}.00
                       </h2>
@@ -162,7 +162,7 @@ const Cart = () => {
                 </button>
               </div>
             </div>
-            <div className="md:col-span-1">
+            <div className="sm:col-span-full md:col-span-full lg:col-span-1 ">
               <div className=" bg-white px-2 h-fit pb-2">
                 <div className="flex justify-between  bg-white shadow-sm py-4 border-b-1 border-custom-btn-green">
                   <h2 className="font-bold">Cart Summary</h2>
