@@ -27,7 +27,7 @@ import { syncCart } from "./redux/cartRedux";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { resetMessages } from "./redux/userRedux";
-// import ScrollToTop from "./hooks/scrollToTop";
+import ScrollToTop from "./hooks/scrollToTop";
 // import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
@@ -86,7 +86,7 @@ const App = () => {
 
   return (
     <div>
-      {/* <ScrollToTop/> */}
+      <ScrollToTop/>
       <ToastContainer />
       <Routes path="/">
         <Route index element={<Home />} />
