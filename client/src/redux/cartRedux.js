@@ -19,9 +19,9 @@ const cartSlice = createSlice({
       const existingProduct = state.products.find((p) => p._id === product._id);
       if (existingProduct) {
         existingProduct.quantity += 1;
-        toast.info("Product quantity increased in cart", {
-          position: "top-right",
-        })
+        // toast.info("Product quantity increased in cart", {
+        //   position: "top-right",
+        // })
       } else {
         state.products.push({ ...product, quantity });
         toast.success("Added a new product to cart", {
@@ -55,9 +55,9 @@ const cartSlice = createSlice({
         );
         state.total = parseFloat(newTotalAmount.toFixed(2));
 
-        toast.info("Increased product quantity", {
-          position: "top-right",
-        });
+        // toast.info("Increased product quantity", {
+        //   position: "top-right",
+        // });
       }
 
       if (state.isUserAuthenticated) {
@@ -81,9 +81,9 @@ const cartSlice = createSlice({
         const product = state.products[productIndex];
         state.total -= product.price;
 
-        toast.info("Decreased product quantity", {
-          position: "top-right",
-        });
+        // toast.info("Decreased product quantity", {
+        //   position: "top-right",
+        // });
       } else if (state.products[productIndex].quantity === 1) {
         const removedProduct = state.products[productIndex];
         state.products.splice(productIndex, 1);
