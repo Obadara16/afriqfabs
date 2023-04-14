@@ -59,7 +59,7 @@ const ProductList = () => {
               <CategorySidebar/>
             </div>
             <div className="col-span-3">
-              <Products cat={cat} filters={filters} sort={sort} displayNo={3} subcat={subcat} />
+              <Products cat={cat} filters={filters} sort={sort} displayNo={12} noOfCols={3} subcat={subcat} />
             </div>
           </div>
       </div>

@@ -12,16 +12,18 @@ const createProduct = async (req, res) => {
   const { categorySlug, subcategorySlug } = req.body;
 
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      background_removal: "cloudinary_ai",
+      use_filename: true
+    });
+    
 
-    // Get category object based on slug
     const category = await Category.findOne({ slug: categorySlug });
 
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    // Check if subcategory exists under the category
     const subcategory = await SubCategory.findOne({
       slug: subcategorySlug,
       categoryId: category._id,
@@ -66,6 +68,7 @@ const createProduct = async (req, res) => {
     res.status(400).json(err);
   }
 };
+
 
 // UPDATE PRODUCT
 const updateProduct = async (req, res) => {

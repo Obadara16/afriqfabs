@@ -18,10 +18,14 @@ const Contact = () => {
     //     height: "100%",
     //     backgroundColor: "rgba(0, 0, 0, 0.5)",
     //   };
+
+    const titleText = "Contact Us"
+    const subtitleText = ""
+
   return (
     <>
         <CombinedNav/>
-        <Header/>
+        <Header title={titleText} subtitle={subtitleText}/>
         <div className="w-[85%] mx-auto flex flex-col">
             <div className="flex flex-col">
                 <p className="text-center">Do you have any questions or complaints? We are  here Monday - Friday  ( 8am - 10pm EST) just for you. </p>

@@ -3,10 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useCategoryAndSubcategory from '../hooks/UseCategoryAndSubCategory';
 import { BASE_URL } from '../requestMethods';
+import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function FlowMenu() {
   const [expandedIndex, setExpandedIndex] = useState(-1);
   const [isNavOpen, setIsNavOpen] = useState(false);
+
+
+  const handleNavClick = () => {
+    setIsNavOpen(!isNavOpen);
+  };
 
   useEffect(() => {
     const getSubcategories = async (slug) => {
@@ -41,6 +48,21 @@ export default function FlowMenu() {
   return (
     <div className="flex w-full justify-center mx-auto mt-0 shadow-md py-4">
       <nav className="w-11/12">
+      <div className="flex items-center md:hidden">
+        <button
+          className="text-black flex items-center justify-center ml-4 w-10 h-10 rounded-full focus:outline-none focus:border-green-600"
+          onClick={handleNavClick}
+        >
+          {isNavOpen ? 
+            <FontAwesomeIcon icon={faXmark} beat size="2xs" />
+            :
+            <FontAwesomeIcon icon={faBars} beat size='2xs'/>
+          }
+        </button>
+      </div>
+      <div
+        className={`${isNavOpen ? "flex" : "hidden"} flex-col items-center justify-center mt-0 bg-transparent-800 text-small p-4 w-full md:w-auto md:flex md:flex-row md:justify-between`}
+      >
         <ul className="md:flex items-center w-11/12 mx-auto justify-between font-light sm:flex-wrap">
             <li className="relative group px-3">
                 <div className="flex flex-col">
@@ -60,11 +82,11 @@ export default function FlowMenu() {
 
             <li className="relative group px-3 py-2">
                 <span className="hover:opacity-50 cursor-default">Fabric Collections</span>
-                <div className="absolute top-0 sm:-left-0 md:-left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 sm:w-[480px] md:w-[600px]  transform">
+                <div className="absolute top-0 sm:-left-0 md:-left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 sm:w-[480px] md:w-[600px] lg:w-[864px]  transform">
                     <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
                         <div className="relative z-10">
-                            <div className="flex gap-3 justify-between">
+                            <div className="w-full flex flex-wrap justify-start md:justify-start lg:justify-start gap-4">
                             {categories.map((category, index) => (
                             <div key={category._id} className="flex flex-col gap-4">
                                 <Link to={`/products/${category.slug}`} className="font-semibold ">{category.name}</Link>
@@ -99,6 +121,7 @@ export default function FlowMenu() {
             </li>
             
         </ul>
+      </div>
       </nav>
     </div>
   );

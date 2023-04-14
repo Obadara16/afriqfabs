@@ -9,6 +9,7 @@ const Products = ({
   filters,
   sort,
   displayNo,
+  noOfCols,
   featured,
   related,
   subcat,
@@ -39,14 +40,14 @@ const Products = ({
   }, [cat, featured, related]);
 
   return (
-    <div className="container mx-auto w-full">
-      <div className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-${displayNo}`}>
+    <div className="w-full mx-auto">
+      <div className={`grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-${noOfCols} gap-6`}>
         {products.slice(0, displayNo).map((item) => (
           <div
             key={item._id}
-            className="w-full p-4"
+            className="w-full"
           >
-            <Product item={item} />
+            <Product item={item} featured={featured} />
           </div>
         ))}
       </div>

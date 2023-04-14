@@ -18,10 +18,13 @@ const About = () => {
         height: "100%",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       };
+
+    const titleText = "About Us"
+    const subtitleText = "Authenticity is our watchword"
   return (
     <>
         <CombinedNav/>
-        <Header/>
+        <Header title={titleText} subtitle={subtitleText}/>
         <div className="w-[85%] mx-auto flex flex-col gap-16">
             <div className="flex flex-col">
             <p className="text-base leading-7">

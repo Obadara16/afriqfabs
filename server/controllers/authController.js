@@ -19,28 +19,28 @@ const loginUser = async(req, res) => {
     try {
 
         if(!email || !password) {
-            throw Error("All fields are required")
+            throw new Error("All fields are required")
         }
     
         if(!validator.isEmail(email)) {
-            throw Error("Email is not valid")
+            throw new Error("Email is not valid")
         }
         
 
         const user = await User.findOne({email})
 
         if (!user) {
-            throw Error("Incorrect Email")
+            throw new Error("Incorrect Email")
         }
 
         const match = await bcrypt.compare(password, user.password)
 
         if(!match) {
-            throw Error("Incorrect Password")
+            throw new Error("Incorrect Password")
         }
 
         if (!user.isVerified) {
-            throw Error("Email not verified. Please check your email and click on the verification link to verify your account.")
+            throw new Error("Email not verified. Please check your email and click on the verification link to verify your account.")
         }
 
         const token = createToken({
@@ -97,7 +97,7 @@ const registerUser = async (req, res) => {
     await Verification.create({ email, code: verificationCode });
 
     // Send a verification email to the user's email address with a link containing the verification code/token
-    const verificationLink = `${process.env.BASE_URL}/verify/${verificationCode}`;
+    const verificationLink = `${process.env.BASE_URL}/verify-email/${verificationCode}`;
     await sendVerificationEmail(email, verificationLink);
 
     res.status(200).json({
@@ -118,7 +118,7 @@ const verifyEmail = async (req, res) => {
     const verification = await Verification.findOne({ code: verificationCode });
 
     if (!verification) {
-      throw Error("Invalid verification code");
+      throw new Error("Invalid verification code");
     }
 
     // Update the user's isVerified field to true
@@ -129,7 +129,7 @@ const verifyEmail = async (req, res) => {
     );
 
     if (!user) {
-      throw Error("User not found");
+      throw new Error("User not found");
     }
 
     // Delete the verification object
@@ -147,12 +147,12 @@ const resetPassword = async (req, res) => {
     
     try {
       if (!resetToken || !password) {
-        throw Error("All fields are required");
+        throw new Error("All fields are required");
       }
     
       const user = await User.findOne({ resetToken });
       if (!user) {
-        throw Error("Invalid reset token");
+        throw new Error("Invalid reset token");
       }
     
       const salt = await bcrypt.genSalt(10);
@@ -187,7 +187,7 @@ const resetPassword = async (req, res) => {
       user.resetToken = resetToken;
       await user.save();
   
-      const resetLink = `${process.env.BASE_URL}/reset/${resetToken}`;
+      const resetLink = `${process.env.BASE_URL}/reset-password/${resetToken}`;
       await sendResetPasswordEmail(email, resetLink);
   
       res.status(200).json({

@@ -1,23 +1,27 @@
 import React from 'react'
 import aboutbackground from "../assets/aboutus.svg";
 
-const Header = () => {
+const Header = ({title, subtitle}) => {
   return (
-    <div
-            className="bg-cover bg-black bg-no-repeat flex justify-center items-center mb-20 h-[300px]  opacity-120"
-            style={{ backgroundImage: `url(${aboutbackground})` }}
+    <div className='h-[400px]'>
+      <div
+          className={`absolute w-full h-[300px] bg-cover bg-center transition-opacity `}
+          style={{
+            backgroundImage: `url(${aboutbackground})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
         >
-            <div className="w-max flex justify-center">
-                
-            <div className="text-center">
-                <h1 className="text-white">About Us</h1>
-                <h4 className="text-white hidden md:block">
-                Authenticity is our Watchword
-                </h4>
-            </div>
-            </div>
-            
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+          ></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <h1 className="text-4xl font-light text-white">{title}</h1>
+            {subtitle && <p className="text-xl text-white mt-6">{subtitle}</p>}
+          </div>
         </div>
+    </div>
   )
 }
 

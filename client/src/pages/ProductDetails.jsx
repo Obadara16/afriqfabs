@@ -58,9 +58,9 @@ const handleDecrease = (_id) => {
   return (
     <div className="w-full">
       <CombinedNav/>
-      <section className="w-11/12 mx-auto flex flex-col gap-6  ">
+      <section className="w-11/12 mx-auto flex flex-col my-12 gap-6  ">
         {/* Product Images and Add to cart section goes here */}
-        <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-16">
+        <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-16 ">
           <div className="col-span-2 md:flex h-fit">
             <div className="flex flex-col justify-center gap-4 h-fit md:w-1/3 sm:w-full">
               <img className="w-full md:w-[100%] h-[180px]" src={img} alt={title}/>
@@ -109,7 +109,7 @@ const handleDecrease = (_id) => {
         </section>
 
         {/* Product Description and Refund section goes here */}
-        <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-16">
+        <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-16 my-12">
           <div className="col-span-2  h-fit flex flex-col gap-5  ">
             <div className="w-full">
                   <h3 className="font-semibold text-2xl leading-8 tracking-wider text-gray-900" >Product Description</h3>
@@ -144,7 +144,7 @@ const handleDecrease = (_id) => {
         {/* Related products section goes here */}
         <section >
           <h3 className="text-center font-semibold">Related Products</h3>
-          <Products displayNo={4} featured={productSlug}/>
+          <Products displayNo={4} noOfCols={4} featured={productSlug}/>
         </section>
       </section>
       <Footer />

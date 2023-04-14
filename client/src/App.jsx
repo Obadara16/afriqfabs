@@ -18,6 +18,9 @@ import Contact from "./pages/Contact";
 import ForgotPassword from "./pages/ForgotPassword";
 import Gallery from "./pages/Gallery";
 import { ToastContainer } from "react-toastify";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import NotFound from "./pages/NotFound";
 
 
 
@@ -35,9 +38,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
+          <Route path="/verify-email/:verificationCode" element={<VerifyEmail />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
-          <Route path="/gallery:slug" element={<Gallery />} />
+          <Route path="/african-style-inspiration/:slug?" element={<Gallery />} />
+          <Route path="*" element={<NotFound />} />
+          
       </Routes>
     </Router>
   );

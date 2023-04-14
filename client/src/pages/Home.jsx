@@ -27,9 +27,9 @@ const Home = () => {
             </h3>
             <p className="text-center">{category.text}</p>
             {category.cat === "featured" ? (
-              <CustomProducts featured={category.cat} displayNo={3} />
+              <Products featured={category.cat} displayNo={3} noOfCols={3} />
             ) : (
-              <Products cat={category.cat} displayNo={3} />
+              <Products cat={category.cat} displayNo={3} noOfCols={3} />
             )}
             <Link to={`/products/${category.cat}`}>
               <button className="py-4 px-16 rounded-md my-8 bg-custom-btn-green text-white w-fit">
