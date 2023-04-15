@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const initialState = {
+  user: null,
   products: localStorage.getItem("carts")
     ? JSON.parse(localStorage.getItem("carts"))
     : [],
@@ -111,6 +112,12 @@ const cartSlice = createSlice({
       state.total = 0;
       localStorage.removeItem("carts");
     },
+    setShouldSync(state, action) {
+      state.shouldSync = action.payload;
+    },
+    setUser(state, action) {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -119,23 +126,38 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   removeProduct,
-
   clearCart,
+  setShouldSync,
+  setUser
 } = cartSlice.actions;
 
 // Define an asynchronous thunk action to sync the cart data with the server
 export const syncCart = () => async (dispatch, getState) => {
+  const { cart } = getState();
+  const { user } = cart;
+
+  if (!user) {
+    console.log("User is not authenticated");
+    return;
+  }
+
   try {
-    const { cart } = getState();
-    const response = await axios.post("/api/cart", cart.products);
+    const response = await axios.post("/api/cart", {
+      user,
+      products: cart.products,
+      quantity: cart.quantity,
+      total: cart.total,
+    });
+
     if (response.status === 200) {
       dispatch({ type: "cart/setShouldSync", payload: false });
-      localStorage.removeItem("carts");
+      localStorage.removeItem("cart");
     }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
     
 
 

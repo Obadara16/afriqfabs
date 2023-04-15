@@ -19,15 +19,16 @@ import Contact from "./pages/Contact";
 import ForgotPassword from "./pages/ForgotPassword";
 import Gallery from "./pages/Gallery";
 import { ToastContainer } from "react-toastify";
+import axios from 'axios';
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 import { useDispatch } from "react-redux";
-import { syncCart } from "./redux/cartRedux";
+import { setShouldSync, syncCart } from "./redux/cartRedux";
 import { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
 import { resetMessages } from "./redux/userRedux";
 import ScrollToTop from "./scrollToTop";
+
 // import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
@@ -38,50 +39,44 @@ const App = () => {
   useEffect(() => {
     dispatch(resetMessages());
   }, [location, dispatch]);
-  
 
-  // const isLoggedIn = useSelector((state) => state.user.currentUser);
-  // const dispatch = useDispatch();
-  // const shouldSyncRedux = useSelector((state) => state.cart.shouldSync);
-  // const [shouldSync, setShouldSync] = useState(shouldSyncRedux);
+  const isLoggedIn = useSelector((state) => state.user.currentUser);
+  const shouldSyncRedux = useSelector((state) => state.cart.shouldSync);
+  const [syncState, setSyncState] = useState(shouldSyncRedux);
     
 
-  
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
-  //   const currentUser = user && JSON.parse(user).currentUser;
-  //   const token = currentUser?.token;
-  
-  //   const handleAuthStateChange = (isLoggedIn) => {
-  //     if (isLoggedIn) {
-  //       dispatch(setShouldSync(true));
-  //       setShouldSync(true);
-  //     } else {
-  //       dispatch(setShouldSync(false));
-  //       setShouldSync(false);
-  //     }
-  //   };
-  
-  //   // // Decode token to get expiration time
-  //   // const decodedToken = jwt_decode(token);
-  //   // const currentTime = Date.now() / 1000;
-  
-  //   // // Check if token is expired
-  //   // if (decodedToken.exp < currentTime) {
-  //   //   handleAuthStateChange(false);
-  //   // } else {
-  //   //   handleAuthStateChange(true);
-  //   // }
-  // }, [dispatch]);
-  
-  // useEffect(() => {
-  //   if (shouldSync) {
-  //     dispatch(syncCart());
-  //     // Reset shouldSync to false after syncing the cart
-  //     setShouldSync(false);
-  //     dispatch(setShouldSync(false));
-  //   }
-  // }, [shouldSync, dispatch]);
+  const handleAuthStateChange = (isLoggedIn) => {
+    if (isLoggedIn) {
+      dispatch(setShouldSync(true));
+      setShouldSync(true);
+      dispatch(resetMessages());
+    } else {
+      dispatch(setShouldSync(false));
+      setShouldSync(false);
+    }
+  };
+
+  axios.interceptors.request.use((config) => {
+    // Do something before request is sent
+    handleAuthStateChange(isLoggedIn);
+
+    return config;
+  }, (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+
+  useEffect(() => {
+    if (syncState) {
+      dispatch(syncCart());
+      // Reset shouldSync to false after syncing the cart
+      setShouldSync(false);
+      dispatch(setShouldSync(false));
+    }
+  }, [syncState, dispatch]);
+
+
+
   
 
   return (

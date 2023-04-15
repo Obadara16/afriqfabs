@@ -49,17 +49,18 @@ const Product = ({ item, featured }) => {
         <div className="bg-gray-300  w-full bg-opacity-20 relative overflow-hidden">
           <img
             src={item.img}
-            className="h-[250px] w-full relative"
+            className="h-[150px] md:h-[250px] w-full relative"
             alt={item.title}
             style={imageStyle}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             loading="lazy"
           />
-          <div className="h-full w-full absolute top-0 left-0 bg-black opacity-50 flex z-0 items-center justify-center pointer-events-none">
+          <div className="h-full w-full absolute top-0 left-0 bg-black opacity-40 flex z-0 items-center justify-center pointer-events-none">
             <div
-              className={`w-10 h-10 rounded-full bg-gray-400 text-${isFavorite ? `green-500` : `white`} flex items-center pointer-events-auto justify-center m-0 transition-all duration-500 z-10 transform hover:scale-110 absolute top-4 right-4`}
+              className={`w-10 h-10 rounded-full text-${isFavorite ? `green-500` : `white`} flex items-center  pointer-events-auto justify-center m-0 transition-all duration-500 z-999 transform hover:scale-110 absolute top-4 right-4`}
               onClick={handleFavoriteClick}
+              style={{background: "#524e4e"}}
             >
               {isFavorite ?
               <FontAwesomeIcon icon={faHeart} style={{color: "#FFFFFF",}} />

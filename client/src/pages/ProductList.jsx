@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Products from "../components/Products";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategorySidebar from "../components/CategorySidebar";
 import CombinedNav from "../components/CombinedNav";
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -14,8 +14,7 @@ const ProductList = () => {
   const subcat = location.pathname.split("/")[3];
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
-  // const [originalText, setOriginalText] = useState("")
-  const [originalSubText, setOriginalSubText] = useState("")
+  const [catText, setCatText] = useState("")
 
   const handleFilters = (e) => {
     const value = e.target.value;
@@ -26,7 +25,12 @@ const ProductList = () => {
   };
 
 
-    const originalText = cat.replace(/-/g, ' ');
+  useEffect(() => {
+    if(cat) {
+      const originalText = cat.replace(/-/g, ' ');
+      setCatText(originalText)
+    }
+  }, [cat]);
   //   const originalSubText = subcat.replace(/-/g, ' ');
   //   setOriginalSubText(originalSubText)
   // }
@@ -40,7 +44,8 @@ const ProductList = () => {
     <div className="w-full">
       <CombinedNav/>
       <div className="w-11/12 mx-auto py-10">
-      <h1 className="m-4 capitalize">{originalText}</h1>
+
+      <h1 className="m-4 capitalize">{catText}</h1>
 
           {/* <BreadCrumb model={items} home={home} className="" /> */}
           <div className="flex justify-between w-full">

@@ -22,7 +22,7 @@ const Home = () => {
             className="flex flex-col align-center justify-center w-full h-full mx-auto pt-16  pb-16 gap-4 "
             key={category.id}
           >
-            <h3 className="text-center font-bold-500 text-3xl">
+            <h3 className="text-center md:font-bold-500 text-xl md:text-3xl">
               {category.heading}
             </h3>
             <p className="text-center">{category.text}</p>

@@ -31,7 +31,6 @@ const Products = ({
         }
         const res = await axios.get(endpoint);
         setProducts(res.data);
-        console.log(res.data);
       } catch (err) {
         console.log(err);
       }

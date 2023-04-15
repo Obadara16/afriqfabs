@@ -4,18 +4,12 @@ const mongoose = require("mongoose")
 // Create a new cart
 const createCart = async (req, res) => {
   try {
-    const { userId, products } = req.body;
-
-
-    // Check if product IDs are valid
-    // for (let i = 0; i < products.length; i++) {
-    //   if (!mongoose.Types.ObjectId.isValid(products[i].productId)) {
-    //     return res.status(400).json({ error: `Invalid product ID: ${products[i].productId}` });
-    //   }
-    // }
-
-    const cart = await Cart.create({ userId, products });
-    res.status(200).json({ cart });
+    const cart = await Cart.findOneAndUpdate(
+      { userId },
+      { userId, products, quantity, total },
+      { upsert: true }
+    );
+    res.status(200).send(cart);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

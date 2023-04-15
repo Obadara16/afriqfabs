@@ -19,7 +19,7 @@ const Slider = () => {
   }, [currentSlide]);
 
   return (
-    <div className="relative" style={{ height: "516px" }}>
+    <div className="relative h-[380px] sm:h-[400px]">
       {sliderItems.map((item, index) => (
         <div
           key={item.id}
@@ -37,10 +37,10 @@ const Slider = () => {
             style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
           ></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <h1 className="text-lg font-light text-white">{item.title}</h1>
-            <p className="text-xl text-white mt-6">{item.cat}</p>
+            <h1 className=" text-sm md:text-lg font-light text-white">{item.title}</h1>
+            <p className="text-normal md:text-xl text-white mt-6">{item.cat}</p>
             <Link to="/products/">
-              <button className="text-lg text-white mt-6 bg-green-600 p-3 pl-6 pr-6 rounded-lg">
+              <button className="text-sm md:text-lg text-white mt-6 bg-custom-btn-green p-3 px-6 rounded-lg whitespace-nowrap">
                 Shop Now
               </button>
             </Link>

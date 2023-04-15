@@ -9,55 +9,75 @@ const { sendVerificationEmail, sendResetPasswordEmail } = require("../services/e
 
 require("dotenv").config()
 
-const createToken = (_id) => {
-    return jwt.sign({_id}, process.env.SECRET_KEY, {expiresIn: "1d"})
-}
+const createTokens = (user) => {
+  const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+  return { accessToken, refreshToken };
+};
 
-const loginUser = async(req, res) => {
-    const {email, password} = req.body
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
 
-    try {
-
-        if(!email || !password) {
-            throw new Error("All fields are required")
-        }
-    
-        if(!validator.isEmail(email)) {
-            throw new Error("Email is not valid")
-        }
-        
-
-        const user = await User.findOne({email})
-
-        if (!user) {
-            throw new Error("Incorrect Email")
-        }
-
-        const match = await bcrypt.compare(password, user.password)
-
-        if(!match) {
-            throw new Error("Incorrect Password")
-        }
-
-        if (!user.isVerified) {
-            throw new Error("Email not verified. Please check your email and click on the verification link to verify your account.")
-        }
-
-        const token = createToken({
-            _id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.SECRET_KEY,
-          {expiresIn:"3d"}
-          )
-
-
-        res.status(200).json({user, token})
-
-    } catch (error) {
-        res.status(400).json({error: error.message})
+  try {
+    if (!email || !password) {
+      throw new Error('All fields are required');
     }
-}
+
+    if (!validator.isEmail(email)) {
+      throw new Error('Email is not valid');
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw new Error('Incorrect Email');
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      throw new Error('Incorrect Password');
+    }
+
+    if (!user.isVerified) {
+      throw new Error('Email not verified. Please check your email and click on the verification link to verify your account.');
+    }
+
+    const tokens = createTokens(user);
+
+    res.status(200).json({ user, tokens });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const refreshToken = async (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    return res.status(401).json({ error: 'Refresh token is missing' });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+    if (refreshToken !== user.refreshToken) {
+      return res.status(401).json({ error: 'Invalid refresh token' });
+    }
+
+    const tokens = createTokens(user);
+
+    res.status(200).json({ tokens });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ error: 'Invalid refresh token' });
+  }
+};
 
 const registerUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -140,6 +160,8 @@ const verifyEmail = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+
 
 const resetPassword = async (req, res) => {
     const { password } = req.body;
@@ -239,4 +261,4 @@ try {
 };
 
 
-module.exports = {loginUser, registerUser, verifyEmail, resetPassword, forgotPassword, changePassword}
+module.exports = {loginUser, refreshToken, registerUser, verifyEmail, resetPassword, forgotPassword, changePassword}
