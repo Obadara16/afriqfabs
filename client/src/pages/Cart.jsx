@@ -71,17 +71,17 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full mx-auto">
+    <div className="flex flex-col h-full w-full mx-auto">
       <CombinedNav />
-      <div className="w-10/12 mx-auto mt-8 flex-1">
+      <div className="w-10/12 mx-auto h-full flex-1">
         {cart.products.length === 0 ? (
-          <div className="flex-column w-full justify-center items-center text-center my-10">
-            <p className="text-sm md:text-xl">Your cart is currently empty</p>
-            <Link to="/products"><button className="py-4 px-16 rounded-md my-8 bg-custom-btn-green text-white w-fit whitespace-nowrap">Shop Products </button></Link>
+          <div className="flex flex-col w-full justify-center h-[60vh] items-center text-center">
+            <p className="text-sm md:text-lg">Your cart is currently empty</p>
+            <Link to="/products"><button className="py-3 px-6 rounded-md my-8 bg-custom-btn-green text-white w-fit whitespace-nowrap text-sm">Shop Products </button></Link>
           </div>
         ) : (
           <div>
-            <h1 className="text-xl font-semibold mb-8">
+            <h1 className="text-xl font-semibold">
             My Cart ({totalQuantity})
           </h1>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

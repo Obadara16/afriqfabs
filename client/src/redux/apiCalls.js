@@ -23,7 +23,7 @@ import {
   resetMessages,
 } from "./userRedux";
 import { publicRequest } from "../requestMethods";
-import { setUser } from "./cartRedux";
+import { setUser, clearCart } from "./cartRedux";
 
 export const login = (email, password) => async (dispatch) => {
   dispatch(loginStart());
@@ -33,7 +33,7 @@ export const login = (email, password) => async (dispatch) => {
       password,
     });
     dispatch(loginSuccess(response.data));
-    dispatch(setUser(response.data.user._id));
+    dispatch(setUser(response.data));
     dispatch(setSuccessMessage(response.data.user.firstName));
   } catch (error) {
     dispatch(
@@ -52,6 +52,10 @@ export const logoutUser = () => {
       // ...
 
       dispatch(logout());
+      const cart = JSON.parse(localStorage.getItem("carts"));
+      dispatch(clearCart(cart));
+      localStorage.removeItem("carts");
+
     } catch (error) {
       console.log(error);
     }

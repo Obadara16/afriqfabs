@@ -19,69 +19,43 @@ import Contact from "./pages/Contact";
 import ForgotPassword from "./pages/ForgotPassword";
 import Gallery from "./pages/Gallery";
 import { ToastContainer } from "react-toastify";
-import axios from 'axios';
+import axios from "axios";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 import { useDispatch } from "react-redux";
-import { setShouldSync, syncCart } from "./redux/cartRedux";
 import { useEffect, useState } from "react";
 import { resetMessages } from "./redux/userRedux";
+import { loadCartFromServer, saveCartToServer } from "./redux/cartRedux";
 import ScrollToTop from "./scrollToTop";
+import { authedRequest } from "./requestMethods";
 
 // import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
-
   const dispatch = useDispatch();
   const location = useLocation();
+  const cartState = useSelector((state) => state.cart);
+  const userData = useSelector((state) => state.user?.currentUser?.tokens?.refreshToken);
+  const userIdFromState = useSelector((state) => state.user?.currentUser?.user._id);
+  console.log(userData)
 
   useEffect(() => {
     dispatch(resetMessages());
   }, [location, dispatch]);
 
-  const isLoggedIn = useSelector((state) => state.user.currentUser);
-  const shouldSyncRedux = useSelector((state) => state.cart.shouldSync);
-  const [syncState, setSyncState] = useState(shouldSyncRedux);
-    
-
-  const handleAuthStateChange = (isLoggedIn) => {
-    if (isLoggedIn) {
-      dispatch(setShouldSync(true));
-      setShouldSync(true);
-      dispatch(resetMessages());
-    } else {
-      dispatch(setShouldSync(false));
-      setShouldSync(false);
-    }
-  };
-
-  axios.interceptors.request.use((config) => {
-    // Do something before request is sent
-    handleAuthStateChange(isLoggedIn);
-
-    return config;
-  }, (error) => {
-    // Do something with request error
-    return Promise.reject(error);
-  });
-
   useEffect(() => {
-    if (syncState) {
-      dispatch(syncCart());
-      // Reset shouldSync to false after syncing the cart
-      setShouldSync(false);
-      dispatch(setShouldSync(false));
+    if (userIdFromState) {
+      // Make a request to the server to get cart state
+      // dispatch(loadCartFromServer(userIdFromState))
+      dispatch(saveCartToServer(userIdFromState))
+
     }
-  }, [syncState, dispatch]);
-
-
-
-  
+  }, [dispatch, userIdFromState]);
 
   return (
     <div>
-      <ScrollToTop/>
+      <ScrollToTop />
       <ToastContainer />
       <Routes path="/">
         <Route index element={<Home />} />
@@ -103,7 +77,6 @@ const App = () => {
         <Route path="/contact-us" element={<Contact />} />
         <Route path="/african-style-inspiration/:slug?" element={<Gallery />} />
         <Route path="*" element={<NotFound />} />
-        
       </Routes>
     </div>
   );

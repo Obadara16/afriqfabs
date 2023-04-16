@@ -27,6 +27,12 @@ const authSchema = new Schema ({
         type: Number,
         required: false
     },
+    accessToken: {
+        type: String,
+      },
+      refreshToken: {
+        type: String,
+      },
     isAdmin: {
         type: Boolean,
         default: false,

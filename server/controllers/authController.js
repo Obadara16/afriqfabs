@@ -9,50 +9,69 @@ const { sendVerificationEmail, sendResetPasswordEmail } = require("../services/e
 
 require("dotenv").config()
 
-const createTokens = (user) => {
-  const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+const generateAccessToken = (userId) => {
+  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+};
+
+const generateRefreshToken = (userId) => {
+  return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+};
+
+const createTokens = async (user) => {
+  const accessToken = generateAccessToken(user._id);
+  const refreshToken = generateRefreshToken(user._id);
+
+  user.accessToken = accessToken;
+  user.refreshToken = refreshToken;
+
+  await user.save();
+
   return { accessToken, refreshToken };
 };
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ error: 'Email is not valid' });
+  }
+
   try {
-    if (!email || !password) {
-      throw new Error('All fields are required');
-    }
-
-    if (!validator.isEmail(email)) {
-      throw new Error('Email is not valid');
-    }
-
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error('Incorrect Email');
+      return res.status(401).json({ error: 'Incorrect Email' });
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      throw new Error('Incorrect Password');
+      return res.status(401).json({ error: 'Incorrect Password' });
     }
 
     if (!user.isVerified) {
-      throw new Error('Email not verified. Please check your email and click on the verification link to verify your account.');
+      return res.status(401).json({ error: 'Email not verified. Please check your email and click on the verification link to verify your account.' });
     }
 
-    const tokens = createTokens(user);
+    const tokens = await createTokens(user);
 
-    res.status(200).json({ user, tokens });
+    const userWithTokens = { user: { ...user.toObject(), password: undefined }, tokens };
+
+    res.status(200).json(userWithTokens);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-const refreshToken = async (req, res) => {
+const refreshTokens = async (req, res) => {
   const { refreshToken } = req.body;
+  console.log("before verifying", refreshToken)
+
   if (!refreshToken) {
     return res.status(401).json({ error: 'Refresh token is missing' });
   }
@@ -67,17 +86,22 @@ const refreshToken = async (req, res) => {
     }
 
     if (refreshToken !== user.refreshToken) {
-      return res.status(401).json({ error: 'Invalid refresh token' });
+      console.log(refreshToken)
+      console.log(user.refreshToken)
+      return res.status(401).json({ error: 'Tokens do not match' });
     }
 
-    const tokens = createTokens(user);
+    const tokens = await createTokens(user);
 
-    res.status(200).json({ tokens });
+    const userWithTokens = { user: { ...user.toObject(), password: undefined }, tokens };
+
+    res.status(200).json(userWithTokens);
   } catch (error) {
     console.error(error);
     res.status(401).json({ error: 'Invalid refresh token' });
   }
 };
+
 
 const registerUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -261,4 +285,4 @@ try {
 };
 
 
-module.exports = {loginUser, refreshToken, registerUser, verifyEmail, resetPassword, forgotPassword, changePassword}
+module.exports = {loginUser, refreshTokens, registerUser, verifyEmail, resetPassword, forgotPassword, changePassword}

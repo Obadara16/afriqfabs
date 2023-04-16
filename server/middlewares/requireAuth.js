@@ -12,7 +12,7 @@ const requireAuth = async (req, res, next) => {
   const token = authorization.split(' ')[1]
 
   try {
-    const { _id } = jwt.verify(token, process.env.SECRET_KEY)
+    const { _id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
     req.user = await Auth.findOne({ _id }).select('_id isAdmin')
     next()

@@ -56,14 +56,14 @@ const ForgotPassword = () => {
   return (
     <div className="">
       <CombinedNav />
-      <div className="w-full mx-auto flex justify-center items-center flex-col my-10 gap-4">
+      <div className="w-full mx-auto flex justify-center items-center flex-col h-screen md:h-[60vh] gap-4">
         <h1 className="text-2xl font-light">Recover Password ?</h1>
         <p className="text-center">Kindly provide your email</p>
         {success ? (
           <p>{success}</p>
         ) : (
           <form
-            className="flex flex-col mt-4 w-1/3 gap-8"
+            className="flex flex-col mt-4 w-2/3 md:w-1/3 gap-8"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="relative">

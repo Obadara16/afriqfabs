@@ -5,10 +5,10 @@ const { requireAuth,  requireAuthAndAdmin } = require("../middlewares/requireAut
 
 
 
-router.post('/', requireAuth, createCart)
+router.put('/', requireAuth, createCart)
 router.put('/:id', requireAuth, updateCartById)
 router.delete('/:id', requireAuth, deleteCartById)
-router.get('/find/:userId', requireAuth, getCartById)
+router.get('/:userId', requireAuth, getCartById)
 router.get('/', requireAuthAndAdmin, getAllCarts)
 
 
