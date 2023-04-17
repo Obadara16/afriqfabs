@@ -18,6 +18,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
   clearCart,
+  getCartsQuantity,
 } from "../redux/cartRedux";
 import logo from "../assets/logo.svg";
 
@@ -28,9 +29,13 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   console.log("this are the products in the cart", cart);
   const user = useSelector((state) => state.user.currentUser);
-  const totalQuantity = useSelector((state) =>
-    state.cart.products.reduce((acc, curr) => acc + curr.quantity, 0)
-  );
+  const cartQuantity = cart.quantity;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCartsQuantity());
+  }, [dispatch]);
+
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
 
@@ -53,9 +58,10 @@ const Cart = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
-  const dispatch = useDispatch();
+  
 
   const handleRemove = (_id) => {
+    console.log("remove id", _id)
     dispatch(removeProduct(_id));
   };
 
@@ -73,16 +79,16 @@ const Cart = () => {
   return (
     <div className="flex flex-col h-full w-full mx-auto">
       <CombinedNav />
-      <div className="w-10/12 mx-auto h-full flex-1">
+      <div className="w-10/12 mx-auto relative h-full  flex-1">
         {cart.products.length === 0 ? (
-          <div className="flex flex-col w-full justify-center h-[60vh] items-center text-center">
+          <div className="flex flex-col w-full justify-center h-screen items-center text-center">
             <p className="text-sm md:text-lg">Your cart is currently empty</p>
             <Link to="/products"><button className="py-3 px-6 rounded-md my-8 bg-custom-btn-green text-white w-fit whitespace-nowrap text-sm">Shop Products </button></Link>
           </div>
         ) : (
           <div>
             <h1 className="text-xl font-semibold">
-            My Cart ({totalQuantity})
+            My Cart ({cartQuantity})
           </h1>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white sm:col-span-full md:col-span-full lg:col-span-3">
@@ -137,7 +143,7 @@ const Cart = () => {
                         <FontAwesomeIcon icon={faMinus} />
                       </button>
                       <span className="font-bold w-8 h-8 bg-gray-100 flex items-center justify-center">
-                        {quantity}
+                        {quantity} 
                       </span>
                       <button
                         className="bg-gray-200 w-8 h-8 flex justify-center items-center"

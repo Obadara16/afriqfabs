@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CombinedNav from "../components/CombinedNav";
 import Footer from "../components/Footer";
 import Alert from "../components/Alert";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { verifyEmail } from "../redux/apiCalls";
 
 

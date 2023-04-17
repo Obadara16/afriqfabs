@@ -4,8 +4,8 @@ import Navbar from './Navbar'
 
 const CombinedNav = () => {
   return (
-    <div>
-        <Navbar/>
+    <div className="w-full">
+        <Navbar />
         <FlowMenu/>
     </div>
   )

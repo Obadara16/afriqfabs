@@ -38,7 +38,7 @@ const App = () => {
   const cartState = useSelector((state) => state.cart);
   const userData = useSelector((state) => state.user?.currentUser?.tokens?.refreshToken);
   const userIdFromState = useSelector((state) => state.user?.currentUser?.user._id);
-  console.log(userData)
+  console.log("this is the cart state from app.js file", cartState)
 
   useEffect(() => {
     dispatch(resetMessages());
@@ -47,7 +47,7 @@ const App = () => {
   useEffect(() => {
     if (userIdFromState) {
       // Make a request to the server to get cart state
-      // dispatch(loadCartFromServer(userIdFromState))
+      dispatch(loadCartFromServer(userIdFromState))
       dispatch(saveCartToServer(userIdFromState))
 
     }
