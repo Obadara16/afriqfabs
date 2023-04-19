@@ -109,7 +109,7 @@ export default function FlowMenu() {
 
             
             <li className="relative group px-3 py-2">
-                        <Link to="/african-style-inspiration" className="hover:opacity-50 cursor-pointer">African Style Inspiration</Link>
+                        <Link to="/african-style-inspirations" className="hover:opacity-50 cursor-pointer">African Style Inspiration</Link>
             </li>
 
             <li className="relative group px-3 py-2">

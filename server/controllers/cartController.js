@@ -21,41 +21,73 @@ const mongoose = require("mongoose");
 const createCart = async (req, res) => {
   try {
     const { userId, cart } = req.body;
+    if (!cart || !cart.products) {
+      return res.status(400).json({ message: "Invalid request body" });
+    }
     console.log("this is the cart received from client", cart);
+
+    const productsWithQuantity = cart.products.map((product) => ({
+      product: product.product,
+      quantity: product.quantity,
+    }));
+
     const existingCart = await Cart.findOne({ user: userId });
     if (existingCart) {
-      const newProducts = cart.products.filter(
+      const newProducts = productsWithQuantity.filter(
         (newProduct) =>
           !existingCart.products.some(
-            (existingProduct) => existingProduct._id === newProduct._id
+            (existingProduct) =>
+              existingProduct.product.toString() ===
+              newProduct.product.toString()
           )
       );
       const mergedProducts = existingCart.products.concat(newProducts);
       const updatedCart = await Cart.findOneAndUpdate(
         { user: userId },
         {
-          $addToSet: { products: { $each: mergedProducts } },
-          quantity: cart.quantity,
-          total: cart.total,
+          $set: { products: mergedProducts },
         },
         { new: true }
       );
+      res.json({ products: updatedCart.products });
     } else {
       const newCart = new Cart({
         user: userId,
-        products: cart.products,
-        quantity: cart.quantity,
-        total: cart.total,
+        products: productsWithQuantity,
       });
       const savedCart = await newCart.save();
+      res.json({ products: savedCart.products });
+      console.log(savedCart.products);
     }
-    res.json({ message: "Cart updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error syncing cart with server" });
   }
 };
 
+// Get a single cart by ID
+const getCartById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    // Map the products array to include the quantity field for each product
+    const productsWithQuantity = cart.products.map((product) => ({
+      ...product.toObject(),
+      quantity: product.quantity,
+    }));
+
+    console.log(cart);
+    res.status(200).json({ products: productsWithQuantity });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error getting cart from backend" });
+  }
+};
 
 // Get all carts
 const getAllCarts = async (req, res) => {
@@ -66,23 +98,6 @@ const getAllCarts = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-// Get a single cart by ID
-const getCartById = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const cart = await Cart.findOne({ user: userId }).populate('products');
-    if (!cart) {
-      return res.status(404).json({ error: 'Cart not found' });
-    }
-    res.status(200).json({ cart });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error getting cart from backend" });
-  }
-};
-
-
 
 // Update a cart by ID
 const updateCartById = async (req, res) => {

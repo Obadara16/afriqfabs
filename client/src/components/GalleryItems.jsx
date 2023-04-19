@@ -61,26 +61,24 @@ const GalleryItems = ({ cat,  displayNo, noOfCols }) => {
   
 
   return (
-    <div className="w-full">
-      <div className="w-full max-w-8xl p-5 pb-10 mx-auto mb-10 gap-5 sm:columns-2 md:columns-3 lg:columns-4 space-y-5 ">
-        {designs.slice(0, displayNo).map((item) => {
-                const {img, slug, rows, _id, columns} = item;
-            return(
-                <div
-                key={_id}
-                className={`min-h-5xl relative rounded-3xl col-span-2 row-span-1`}>
-                    <img
-                        src={img}
-                        className={`w-full rounded-3xl`}
-                        alt={item.title}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    />
-                </div>
-        )})
-        }
+      <div className="w-full">
+        <div className="w-full max-w-8xl p-5 pb-10 mx-auto mb-10 gap-6 sm:columns-2 md:columns-3 lg:columns-4 space-y-5 ">
+          {designs.slice(0, displayNo).map((item) => {
+                  const {img, slug, rows, _id, columns} = item;
+              return(
+                    <Link to={`/african-style-inspiration/${cat.slug}/${slug}`} className={`min-h-5xl relative rounded-3xl col-span-2 row-span-1 my-5`} key={_id}>
+                      <img
+                          src={img}
+                          className={`w-full rounded-3xl`}
+                          alt={item.title}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                      />
+                    </Link>
+          )})
+          }
+        </div>
       </div>
-    </div>
   );
 };
 

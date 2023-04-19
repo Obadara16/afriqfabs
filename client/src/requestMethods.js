@@ -1,12 +1,21 @@
 import axios from "axios";
 
-// export const BASE_URL = "http://localhost:5000/api/";
-export const BASE_URL = "https://afrimart-backend.onrender.com/api/";
+export const BASE_URL = "http://localhost:5000/api/";
+// export const BASE_URL = "https://afrimart-backend.onrender.com/api/";
 
-const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
+
+const userJSON = localStorage.getItem("persist:root");
+const user = userJSON ? JSON.parse(userJSON).user : null;
+
+console.log("this is the faulty user", user)
+
 const currentUser = user && JSON.parse(user).currentUser;
-const ACCESS_TOKEN = currentUser?.tokens?.accessToken;
-const REFRESH_TOKEN = currentUser?.tokens?.refreshToken;
+console.log("this is the faulty current user", currentUser)
+
+
+const ACCESS_TOKEN = currentUser?.tokens?.accessToken || null;
+const REFRESH_TOKEN = currentUser?.tokens?.refreshToken || null;
+
 console.log(currentUser)
 
 export const publicRequest = axios.create({
@@ -49,6 +58,7 @@ const refreshAccessToken = async () => {
   isRefreshing = true;
 
   try {
+    console.log("this was started")
     const res = await axios.post(`${BASE_URL}auth/refresh-token`, {
       refreshToken: REFRESH_TOKEN,
     });

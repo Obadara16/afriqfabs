@@ -16,7 +16,8 @@ module.exports = {
           'text-green': 'rgba(4, 161, 67, 0.6)',
           'btn-green': "#04A143",
           'brown': '#AA9580',
-          'basic-color': "#ECF1ED",
+          'basic-color': '#FFFFFF'
+          // 'basic-color': "#ECF1ED",
         },
       },
     },

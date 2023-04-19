@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore, combineReducers, applyMiddleware } from "@reduxjs/toolkit";
 import cartReducer from "./cartRedux";
 import userReducer from "./userRedux";
 import {
@@ -12,7 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import { saveCartMiddleware } from "./cartRedux";
 
 const persistConfig = {
   key: "root",
@@ -31,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(saveCartMiddleware),
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: {}, // Set an empty initial state
 });

@@ -28,7 +28,8 @@ import { useEffect, useState } from "react";
 import { resetMessages } from "./redux/userRedux";
 import { loadCartFromServer, saveCartToServer } from "./redux/cartRedux";
 import ScrollToTop from "./scrollToTop";
-import { authedRequest } from "./requestMethods";
+import GalleryDetails from "./pages/GalleryDetails";
+import Checkout from "./pages/Checkout";
 
 // import PrivateRoute from "./utils/PrivateRoute";
 
@@ -37,8 +38,10 @@ const App = () => {
   const location = useLocation();
   const cartState = useSelector((state) => state.cart);
   const userData = useSelector((state) => state.user?.currentUser?.tokens?.refreshToken);
+  const userDetails= useSelector((state) => state.user?.currentUser?.user);
   const userIdFromState = useSelector((state) => state.user?.currentUser?.user._id);
   console.log("this is the cart state from app.js file", cartState)
+  console.log("this is the user state from app.js file", userDetails)
 
   useEffect(() => {
     dispatch(resetMessages());
@@ -46,12 +49,12 @@ const App = () => {
 
   useEffect(() => {
     if (userIdFromState) {
-      // Make a request to the server to get cart state
-      dispatch(loadCartFromServer(userIdFromState))
-      dispatch(saveCartToServer(userIdFromState))
-
+      dispatch(saveCartToServer(userIdFromState)).then(() => {
+        dispatch(loadCartFromServer(userIdFromState));
+      });
     }
   }, [dispatch, userIdFromState]);
+
 
   return (
     <div>
@@ -65,6 +68,7 @@ const App = () => {
         />
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -75,7 +79,8 @@ const App = () => {
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
-        <Route path="/african-style-inspiration/:slug?" element={<Gallery />} />
+        <Route path="/african-style-inspirations/:slug?" element={<Gallery />} />
+        <Route path="/african-style-inspiration/:cat/:slug" element={<GalleryDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

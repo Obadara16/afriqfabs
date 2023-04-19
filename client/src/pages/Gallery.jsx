@@ -10,7 +10,7 @@ const galleryTitle = "African Style Inspiration"
 
 const Gallery = () => {
   const [categories, setCategories] = useState([])
-  const [categorySent, setCategorySent] = useState("")
+  const [categorySent, setCategorySent] = useState("george-fabric")
 
   useEffect(() => {
 

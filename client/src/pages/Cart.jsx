@@ -18,7 +18,6 @@ import {
   increaseQuantity,
   decreaseQuantity,
   clearCart,
-  getCartsQuantity,
 } from "../redux/cartRedux";
 import logo from "../assets/logo.svg";
 
@@ -29,12 +28,16 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   console.log("this are the products in the cart", cart);
   const user = useSelector((state) => state.user.currentUser);
-  const cartQuantity = cart.quantity;
+  const cartQuantity = cart.products.length;
+
+  const totalPrice = useSelector(state =>
+    state.cart.products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+  );
+  
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCartsQuantity());
-  }, [dispatch]);
+
 
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
@@ -57,7 +60,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history]);
+  }, [stripeToken, totalPrice, history]);
   
 
   const handleRemove = (_id) => {
@@ -81,13 +84,13 @@ const Cart = () => {
       <CombinedNav />
       <div className="w-10/12 mx-auto relative h-full  flex-1">
         {cart.products.length === 0 ? (
-          <div className="flex flex-col w-full justify-center h-screen items-center text-center">
+          <div className="flex flex-col w-full justify-center h-[60vh] items-center text-center">
             <p className="text-sm md:text-lg">Your cart is currently empty</p>
             <Link to="/products"><button className="py-3 px-6 rounded-md my-8 bg-custom-btn-green text-white w-fit whitespace-nowrap text-sm">Shop Products </button></Link>
           </div>
         ) : (
-          <div>
-            <h1 className="text-xl font-semibold">
+          <div className="mt-12">
+            <h1 className="text-xl font-semibold my-4">
             My Cart ({cartQuantity})
           </h1>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -190,7 +193,7 @@ const Cart = () => {
                   <div className="flex justify-between py-3">
                     <p className="flex-1">Subtotal</p>
                     <p className="flex-1 font-bold text-md text-custom-btn-green">
-                      ${cart.total}.00
+                      ${totalPrice}.00
                     </p>
                   </div>
                 </div>
@@ -199,8 +202,8 @@ const Cart = () => {
                 <StripeCheckout
                   name="Afriq Fabs"
                   image={logo}
-                  description={`Your total is $${cart.total}`}
-                  amount={cart.total * 100}
+                  description={`Your total is $${totalPrice}`}
+                  amount={totalPrice * 100}
                   token={onToken}
                   stripeKey={KEY}
                   className="w-full"

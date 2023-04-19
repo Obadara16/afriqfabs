@@ -16,20 +16,16 @@ import SearchComponent from "./SearchComponent";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/apiCalls";
-import {
-  getCartsQuantity,
-} from "../redux/cartRedux";
+
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
-  const cartQuantity = cart.quantity;
+  const cartQuantity = cart.products.length;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCartsQuantity());
-  }, [dispatch]);
+
 
 
   const handleNavClick = () => {

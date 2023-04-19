@@ -20,10 +20,10 @@ import {
   verifyEmailFailure,
   setErrorMessage,
   setSuccessMessage,
-  resetMessages,
+  
 } from "./userRedux";
 import { publicRequest } from "../requestMethods";
-import { setUser, clearCart } from "./cartRedux";
+import { setUser, clearUserCart, saveCartToServer } from "./cartRedux";
 
 export const login = (email, password) => async (dispatch) => {
   dispatch(loginStart());
@@ -32,9 +32,13 @@ export const login = (email, password) => async (dispatch) => {
       email,
       password,
     });
+    dispatch(setUser(response.data.user._id));
     dispatch(loginSuccess(response.data));
-    dispatch(setUser(response.data));
     dispatch(setSuccessMessage(response.data.user.firstName));
+    // dispatch(saveCartToServer(response.data.user._id))
+    // .then(() => {
+    //   dispatch(loadCartFromServer(response.data.user._id)); // dispatch saveToCart function
+    // })
   } catch (error) {
     dispatch(
       loginFailure(error.response.data.error || error.response.data.message)
@@ -45,6 +49,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+
 export const logoutUser = () => {
   return async (dispatch) => {
     try {
@@ -53,8 +58,9 @@ export const logoutUser = () => {
 
       dispatch(logout());
       const cart = JSON.parse(localStorage.getItem("carts"));
-      dispatch(clearCart(cart));
+      dispatch(clearUserCart());
       localStorage.removeItem("carts");
+
 
     } catch (error) {
       console.log(error);
