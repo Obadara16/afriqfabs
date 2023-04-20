@@ -10,7 +10,7 @@ const { sendVerificationEmail, sendResetPasswordEmail } = require("../services/e
 require("dotenv").config()
 
 const generateAccessToken = (userId) => {
-  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3d' });
 };
 
 const generateRefreshToken = (userId) => {

@@ -26,7 +26,7 @@ import NotFound from "./pages/NotFound";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { resetMessages } from "./redux/userRedux";
-import { loadCartFromServer, saveCartToServer } from "./redux/cartRedux";
+// import { loadCartFromServer, saveCartToServer } from "./redux/cartRedux";
 import ScrollToTop from "./scrollToTop";
 import GalleryDetails from "./pages/GalleryDetails";
 import Checkout from "./pages/Checkout";
@@ -47,13 +47,13 @@ const App = () => {
     dispatch(resetMessages());
   }, [location, dispatch]);
 
-  useEffect(() => {
-    if (userIdFromState) {
-      dispatch(saveCartToServer(userIdFromState)).then(() => {
-        dispatch(loadCartFromServer(userIdFromState));
-      });
-    }
-  }, [dispatch, userIdFromState]);
+  // useEffect(() => {
+  //   if (userIdFromState) {
+  //     dispatch(saveCartToServer(userIdFromState)).then(() => {
+  //       dispatch(loadCartFromServer(userIdFromState));
+  //     });
+  //   }
+  // }, [dispatch, userIdFromState]);
 
 
   return (

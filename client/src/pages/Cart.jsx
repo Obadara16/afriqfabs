@@ -199,19 +199,27 @@ const Cart = () => {
                 </div>
               </div>
               {user ? (
-                <StripeCheckout
-                  name="Afriq Fabs"
-                  image={logo}
-                  description={`Your total is $${totalPrice}`}
-                  amount={totalPrice * 100}
-                  token={onToken}
-                  stripeKey={KEY}
-                  className="w-full"
-                >
-                  <button className="bg-custom-btn-green paystack-button text-white font-md py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4 w-full">
-                    Proceed to Checkout
-                  </button>
-                </StripeCheckout>
+                <div className="w-full flex flex-col gap-4">
+                  <StripeCheckout
+                    name="Afriq Fabs"
+                    image={logo}
+                    description={`Your total is $${totalPrice}`}
+                    amount={totalPrice * 100}
+                    token={onToken}
+                    stripeKey={KEY}
+                    className="w-full"
+                  >
+                    <button className="bg-custom-btn-green paystack-button text-white font-md py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4 w-full">
+                      Proceed to Stripe Checkout
+                    </button>
+                  </StripeCheckout>
+                  <Link to="/checkout">
+                    <button className="border border-custom-btn-green hover:bg-gray-400 hover:text-white  text-black font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline w-full">
+                        Proceed to Checkout
+                    </button>
+                  </Link>
+
+                </div>
               ) : (
                 <button
                   className="bg-custom-btn-green text-white font-bold py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-300 mt-4 w-full"

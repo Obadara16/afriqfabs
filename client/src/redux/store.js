@@ -12,7 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { saveCartMiddleware } from "./cartRedux";
+// import { saveCartMiddleware } from "./cartRedux";
 
 const persistConfig = {
   key: "root",
@@ -31,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(saveCartMiddleware),
+    }).concat(),
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: {}, // Set an empty initial state
 });

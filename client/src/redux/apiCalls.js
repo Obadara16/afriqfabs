@@ -23,7 +23,7 @@ import {
   
 } from "./userRedux";
 import { publicRequest } from "../requestMethods";
-import { setUser, clearUserCart, saveCartToServer } from "./cartRedux";
+import { setUser, clearUserCart } from "./cartRedux";
 
 export const login = (email, password) => async (dispatch) => {
   dispatch(loginStart());
