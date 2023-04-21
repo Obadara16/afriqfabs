@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../requestMethods";
 
-const GalleryItems = ({ cat,  displayNo, noOfCols }) => {
+const GalleryItems = ({ cat,  displayNo, categ }) => {
   const [designs, setDesigns] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -40,7 +40,7 @@ const GalleryItems = ({ cat,  displayNo, noOfCols }) => {
       try {
         let endpoint = `${BASE_URL}designs`;
         if (cat) {
-          endpoint += `?categorySlug=${cat.slug}`;
+          endpoint += `?categorySlug=${cat}`;
         } 
         const res = await axios.get(endpoint);
         setDesigns(res.data);
@@ -62,14 +62,14 @@ const GalleryItems = ({ cat,  displayNo, noOfCols }) => {
 
   return (
       <div className="w-full">
-        <div className="w-full max-w-8xl p-5 pb-10 mx-auto mb-10 gap-6 sm:columns-2 md:columns-3 lg:columns-4 space-y-5 ">
+        <div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
           {designs.slice(0, displayNo).map((item) => {
                   const {img, slug, rows, _id, columns} = item;
               return(
-                    <Link to={`/african-style-inspiration/${cat.slug}/${slug}`} className={`min-h-5xl relative rounded-3xl col-span-2 row-span-1 my-5`} key={_id}>
+                    <Link to={`/african-style-inspiration/${cat.slug}/${slug}`} key={_id}>
                       <img
                           src={img}
-                          className={`w-full rounded-3xl`}
+                          className={`w-full h-[340px] rounded-3xl`}
                           alt={item.title}
                           onMouseEnter={handleMouseEnter}
                           onMouseLeave={handleMouseLeave}

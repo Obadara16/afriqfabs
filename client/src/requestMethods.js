@@ -7,16 +7,16 @@ export const BASE_URL = "http://localhost:5000/api/";
 const userJSON = localStorage.getItem("persist:root");
 const user = userJSON ? JSON.parse(userJSON).user : null;
 
-console.log("this is the faulty user", user)
+// console.log("this is the faulty user", user)
 
 const currentUser = user && JSON.parse(user).currentUser;
-console.log("this is the faulty current user", currentUser)
+// console.log("this is the faulty current user", currentUser)
 
 
 const ACCESS_TOKEN = currentUser?.tokens?.accessToken || null;
 const REFRESH_TOKEN = currentUser?.tokens?.refreshToken || null;
 
-console.log(currentUser)
+// console.log(currentUser)
 
 export const publicRequest = axios.create({
   baseURL: BASE_URL,

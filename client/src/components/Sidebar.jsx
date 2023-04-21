@@ -32,7 +32,7 @@ const Sidebar = () => {
                 </Link>
             </div>
             <div className="w-full flex px-4 py-4 border-t border-gray-200">
-                <FontAwesomeIcon icon={faArrowRightFromBracket} className="text-red-500 p-1"/><span className="pl-2 hover:cursor-pointer"onClick={handleLogout}>  Logout</span>
+                <FontAwesomeIcon icon={faArrowRightFromBracket} className="text-red-500 p-1"/><span className="pl-2 hover:cursor-pointer"onClick={handleLogout}>Logout</span>
             </div>
     </div>
   );

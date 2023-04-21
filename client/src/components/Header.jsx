@@ -3,9 +3,9 @@ import aboutbackground from "../assets/aboutus.svg";
 
 const Header = ({title, subtitle}) => {
   return (
-    <div className='h-[400px]'>
+    <div className='h-[200px] mb-6'>
       <div
-          className={`absolute w-full h-[300px] bg-cover bg-center transition-opacity `}
+          className={`absolute w-full h-[200px] bg-cover bg-center transition-opacity `}
           style={{
             backgroundImage: `url(${aboutbackground})`,
             backgroundPosition: "center",
