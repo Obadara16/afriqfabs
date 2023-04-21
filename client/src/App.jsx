@@ -30,6 +30,11 @@ import { resetMessages } from "./redux/userRedux";
 import ScrollToTop from "./scrollToTop";
 import GalleryDetails from "./pages/GalleryDetails";
 import Checkout from "./pages/Checkout";
+import Profile from "./pages/Profile";
+import EditAddress from "./pages/EditAddress";
+import AddAddress from "./pages/AddAddress";
+import Favourites from "./pages/Favourites";
+import Orders from "./pages/Orders";
 
 // import PrivateRoute from "./utils/PrivateRoute";
 
@@ -79,6 +84,11 @@ const App = () => {
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
+        <Route path="/favourites" element={<Favourites />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/edit-address" element={<EditAddress />} />
+        <Route path="/profile/add-address" element={<AddAddress />} />
         <Route path="/african-style-inspirations/:slug?" element={<Gallery />} />
         <Route path="/african-style-inspiration/:cat/:slug" element={<GalleryDetails />} />
         <Route path="*" element={<NotFound />} />

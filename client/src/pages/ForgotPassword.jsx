@@ -56,7 +56,7 @@ const ForgotPassword = () => {
   return (
     <div className="">
       <CombinedNav />
-      <div className="w-full mx-auto flex justify-center items-center flex-col h-screen md:h-[60vh] gap-4">
+      <div className="w-full mx-auto flex justify-center items-center flex-col my-12 gap-4">
         <h1 className="text-2xl font-light">Recover Password ?</h1>
         <p className="text-center">Kindly provide your email</p>
         {success ? (

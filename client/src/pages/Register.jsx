@@ -73,7 +73,6 @@ const onSubmit = async (data) => {
         <form className="flex flex-col mt-4 sm-w-full md:w-1/3 gap-8"
           onSubmit={handleSubmit(onSubmit)}
         >
-
           <div className="relative">
             <input
               type="text"
@@ -150,37 +149,37 @@ const onSubmit = async (data) => {
             </label>
           </div>
  
-        <div className="flex flex-col">
-            {!(success === null) &&
-              <Alert color={`custom-btn-green`} data={alerting.data} />
-            }
-            {!(error === null) &&
-              <Alert color={`red-500`} data={alerting.data} />
-            }
-            <button
-              className={`w-full px-4 h-[54px] mt-4 rounded cursor-pointer ${
-                isFetching
-                  ? "bg-gray-400 text-gray-900"
-                  : "bg-custom-btn-green text-white"
-              }`}
-              disabled={isFetching}
+          <div className="flex flex-col">
+              {!(success === null) &&
+                <Alert color={`custom-btn-green`} data={alerting.data} />
+              }
+              {!(error === null) &&
+                <Alert color={`red-500`} data={alerting.data} />
+              }
+              <button
+                className={`w-full px-4 h-[54px] mt-4 rounded cursor-pointer ${
+                  isFetching
+                    ? "bg-gray-400 text-gray-900"
+                    : "bg-custom-btn-green text-white"
+                }`}
+                disabled={isFetching}
+              >
+                {isFetching ? "Loading..." : "Register"}
+              </button>
+            </div>
+          <p className="text-center">
+            Already have an account ?{" "}
+            <Link
+              to="/login"
+              className="my-2 text-sm cursor-pointer text-custom-btn-green font-medium"
             >
-              {isFetching ? "Loading..." : "Register"}
-            </button>
-          </div>
-        <p className="text-center">
-          Already have an account ?{" "}
-          <Link
-            to="/login"
-            className="my-2 text-sm cursor-pointer text-custom-btn-green font-medium"
-          >
-            Login
-          </Link>
-        </p>
-          {/* {error && <span className="text-red-500">{error}</span>}
-          {success && <p>{success.message}</p>} */}
+              Login
+            </Link>
+          </p>
+            {/* {error && <span className="text-red-500">{error}</span>}
+            {success && <p>{success.message}</p>} */}
 
-      </form>
+        </form>
       </div>
     <Footer />
     </div>

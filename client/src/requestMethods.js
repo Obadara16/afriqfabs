@@ -1,20 +1,22 @@
 import axios from "axios";
 
-// export const BASE_URL = "http://localhost:5000/api/";
-export const BASE_URL = "https://afrimart-backend.onrender.com/api/";
+export const BASE_URL = "http://localhost:5000/api/";
+// export const BASE_URL = "https://afrimart-backend.onrender.com/api/";
+
 
 const userJSON = localStorage.getItem("persist:root");
 const user = userJSON ? JSON.parse(userJSON).user : null;
 
-console.log("this is the faulty user", user);
+console.log("this is the faulty user", user)
 
 const currentUser = user && JSON.parse(user).currentUser;
-console.log("this is the faulty current user", currentUser);
+console.log("this is the faulty current user", currentUser)
+
 
 const ACCESS_TOKEN = currentUser?.tokens?.accessToken || null;
 const REFRESH_TOKEN = currentUser?.tokens?.refreshToken || null;
 
-console.log(currentUser);
+console.log(currentUser)
 
 export const publicRequest = axios.create({
   baseURL: BASE_URL,
@@ -25,7 +27,7 @@ export const authedRequest = axios.create({
   headers: {
     Authorization: `Bearer ${ACCESS_TOKEN}`,
   },
-});
+})
 
 export const userRequest = axios.create({
   baseURL: BASE_URL,
@@ -56,12 +58,12 @@ const refreshAccessToken = async () => {
   isRefreshing = true;
 
   try {
-    console.log("this was started");
+    console.log("this was started")
     const res = await axios.post(`${BASE_URL}auth/refresh-token`, {
       refreshToken: REFRESH_TOKEN,
     });
     if (res.status === 200) {
-      console.log(res.data);
+      console.log(res.data)
       localStorage.setItem(
         "persist:root",
         JSON.stringify({

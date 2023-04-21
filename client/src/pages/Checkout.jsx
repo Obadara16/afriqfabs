@@ -71,8 +71,8 @@ const Checkout = () => {
       <CombinedNav />
         <div className="w-10/12 mx-auto relative h-full  flex-1">
         {step === 3 ? (
-          <div className="flex flex-col w-full justify-center h-[60vh] items-center text-center">
-            <img src={paymentconfirm} alt="paymenttick"/>
+          <div className="flex flex-col w-full justify-center  my-12  items-center text-center gap-4">
+            <img src={paymentconfirm} alt="paymenttick" height={85} width={85}/>
             <p className="text-sm md:text-lg font-bold">Payment Successful</p>
             <p className="text-sm md:text-md font-normal">Your order has been received and is being processed.</p>
             <Link to="/products"><button className="py-3 px-6 rounded-md my-8 bg-custom-btn-green text-white w-fit whitespace-nowrap text-sm">Continue Shopping</button></Link>
@@ -86,11 +86,16 @@ const Checkout = () => {
                             <div className="w-11/12 mx-auto">
                                 <div class="flex  mb-4">
                                     <div class="flex-shrink-0 mr-1">
-                                        <div class="relative h-12 flex justify-center items-center ">
-                                            <div class={`relative w-5 h-5 bg-white border ${
+                                        <div class="relative h-12 flex justify-center items-center">
+                                            <div class={`relative w-5 h-5 border ${
                                                         step === 1
                                                         ? "border-custom-btn-green"
                                                         : "border-gray-500"
+                                                    } 
+                                                    ${
+                                                        step === 2
+                                                        ? "bg-custom-btn-green"
+                                                        : "bg-white"
                                                     }  rounded-full flex items-center justify-center`}>
                                                 <div class="font-bold  flex justify-center items-center"><span className={`${ step === 1 ? "bg-custom-btn-green h-[3px] w-[3px]" : "bg-white"}`}/></div>
                                             </div>
@@ -100,7 +105,11 @@ const Checkout = () => {
                                         </span>
                                     </div>
                                     <div class="relative flex-grow flex h-12 items-center just mr-1">
-                                        <div class="h-[2px] bg-gray-500 rounded-full w-full"></div>
+                                        <div class={`h-[2px] ${
+                                                        step === 2
+                                                        ? "bg-custom-btn-green"
+                                                        : "bg-gray-300"
+                                                    } rounded-full w-full`}></div>
                                     </div>
                                     <div class="flex-shrink-0 mr-1">
                                         <div class="relative h-12 flex justify-center items-center ">
@@ -146,8 +155,8 @@ const Checkout = () => {
                                     </div>
                                     <div className="flex-1 border border-custom-btn-green italic p-3 rounded-md">Your item should be delivered to you in about 3 working days within Lagos & Abuja, and 5 to 7 days outside Lagos & Abuja.</div>
                                 </div>
-                                <div className="mb-6 flex items-center justify-between">
-                                    <div className="relative w-[45%]">
+                                <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("firstName")}
@@ -165,7 +174,7 @@ const Checkout = () => {
                                         {errors.firstName ? errors.firstName.message : "First Name "}
                                         </label>
                                     </div>
-                                    <div className="relative w-[45%]">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("lasttName")}
@@ -184,8 +193,8 @@ const Checkout = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="mb-6 flex items-center justify-between">
-                                    <div className="relative w-[45%]">
+                                <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("phoneNumber1")}
@@ -203,7 +212,7 @@ const Checkout = () => {
                                         {errors.phoneNumber1 ? errors.phoneNumber1.message : "Phone Number 1 (*) "}
                                         </label>
                                     </div>
-                                    <div className="relative w-[45%]">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("phoneNumber2")}
@@ -264,8 +273,8 @@ const Checkout = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="mb-6 flex items-center justify-between">
-                                    <div className="relative w-[45%]">
+                                <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("city")}
@@ -283,7 +292,7 @@ const Checkout = () => {
                                         {errors.city ? errors.city.message : "City "}
                                         </label>
                                     </div>
-                                    <div className="relative w-[45%]">
+                                    <div className="relative w-full">
                                         <input
                                         type="text"
                                         {...register("state")}
@@ -302,7 +311,7 @@ const Checkout = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="mb-6 flex items-center justify-between">
+                                <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
                                     <div className="relative w-[100%]">
                                         <input
                                         type="text"
@@ -324,11 +333,11 @@ const Checkout = () => {
                                 </div>
                                 <div className="flex justify-end gap-3">
                                     <Link to="/cart">
-                                        <button className="border border-custom-btn-green hover:bg-custom-btn-green hover:text-white  text-black font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline">
+                                        <button className="border border-custom-btn-green hover:bg-custom-btn-green hover:text-white  text-black text-xs md:text-lg   whitespace-nowrap py-2 px-8 rounded focus:outline-none focus:shadow-outline">
                                             Return To Cart
                                         </button>
                                     </Link>
-                                    <button className="bg-custom-btn-green hover:bg-white hover:border hover:border-custom-btn-green hover:text-black text-white font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handleNext}>
+                                    <button className="bg-custom-btn-green hover:bg-white hover:border hover:border-custom-btn-green hover:text-black text-white text-xs md:text-lg  whitespace-nowrap py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handleNext}>
                                         Next
                                     </button>
                                 </div>
@@ -371,7 +380,7 @@ const Checkout = () => {
                                     </div>
                                     {paymentMethod === 'card' && (
                                         <div>
-                                            <div className="mb-6 flex items-center justify-between">
+                                            <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
                                                 <div className="relative w-[100%]">
                                                     <input
                                                     type="text"
@@ -391,7 +400,7 @@ const Checkout = () => {
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div className="mb-6 flex items-center justify-between">
+                                            <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
                                                 <div className="relative w-[100%]">
                                                     <input
                                                     type="text"
@@ -411,8 +420,8 @@ const Checkout = () => {
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div className="mb-6 flex items-center justify-between">
-                                                <div className="relative w-[45%]">
+                                            <div className="mb-6 flex flex-col md:flex-row lg:flex-row gap-4  items-center md:justify-between">
+                                                <div className="relative w-full">
                                                     <input
                                                     type="text"
                                                     {...register("expirationDate")}
@@ -430,7 +439,7 @@ const Checkout = () => {
                                                     {errors.expirationDate ? errors.expirationDate.message : "Expiration Date "}
                                                     </label>
                                                 </div>
-                                                <div className="relative w-[45%]">
+                                                <div className="relative w-full">
                                                     <input
                                                     type="text"
                                                     {...register("cvv")}
@@ -453,10 +462,10 @@ const Checkout = () => {
                                                 <p>By clicking “confirm payment”, i agree to company terms of service</p>
                                             </div>
                                             <div className="flex justify-end gap-3 mt-6">
-                                                <button className="border border-custom-btn-green hover:bg-custom-btn-green hover:text-white  text-black font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handlePrevious}>
+                                                <button className="border border-custom-btn-green hover:bg-custom-btn-green hover:text-white  text-black font-normal text-xs whitespace-nowrap md:text-lg py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handlePrevious}>
                                                     Previous
                                                 </button>
-                                                <button className="bg-custom-btn-green hover:bg-white hover:border hover:border-custom-btn-green hover:text-black text-white font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handleNext}>
+                                                <button className="bg-custom-btn-green hover:bg-white hover:border hover:border-custom-btn-green hover:text-black text-white text-xs md:text-lg whitespace-nowrap font-normal py-2 px-8 rounded focus:outline-none focus:shadow-outline"  onClick={handleNext}>
                                                     Make Payment
                                                 </button>
                                             </div>

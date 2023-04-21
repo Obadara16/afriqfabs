@@ -63,7 +63,7 @@ export default function FlowMenu() {
       <div
         className={`${isNavOpen ? "flex" : "hidden"} flex-col items-center justify-center mt-0 bg-transparent-800 text-small p-4 w-full md:w-auto md:flex md:flex-row md:justify-between`}
       >
-        <ul className="md:flex items-center w-11/12 mx-auto justify-between font-light sm:flex-wrap">
+        <ul className="md:flex items-center w-11/12 mx-auto md:justify-start lg:justify-between font-light sm:flex-wrap">
             <li className="relative group px-3">
                 <div className="flex flex-col">
                     <select onChange={(e) => setSort(e.target.value)} className="px-2 w-fit">
