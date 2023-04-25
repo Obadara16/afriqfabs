@@ -2,25 +2,37 @@ const jwt = require('jsonwebtoken')
 const Auth = require('../models/authModel')
 
 const requireAuth = async (req, res, next) => {
-  // verify user is authenticated
-  const { authorization } = req.headers
-
-  if (!authorization) {
-    return res.status(401).json({error: 'Authorization token required'})
-  }
-
-  const token = authorization.split(' ')[1]
-
   try {
-    const { _id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    // extract the access token from the authorization header
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
 
-    req.user = await Auth.findOne({ _id }).select('_id isAdmin')
-    next()
+    // if there's no token, return an error
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
 
+    // verify the token using the JWT secret
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    // find the user with the decoded user ID
+    const user = await Auth.findById(decoded.userId);
+
+    // if the user doesn't exist, return an error
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    // add the user object to the request object for future use
+    req.user = user;
+
+    // continue to the next middleware
+    next();
   } catch (error) {
-    res.status(401).json({error: 'Request is not authorized'})
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
 const requireAuthAndAuthorization = async (req, res, next) => {
   try {
@@ -43,7 +55,8 @@ const requireAuthAndAuthorization = async (req, res, next) => {
 const requireAuthAndAdmin = async (req, res, next) => {
   try {
     await requireAuth(req, res, async () => {
-      if (req.user.isAdmin) {
+      console.log(req.user)
+      if (req.user && req.user.isAdmin) {
         next()
       } else {
         res.status(403).json({ error: 'You do not have access to perform this action' })
@@ -54,5 +67,6 @@ const requireAuthAndAdmin = async (req, res, next) => {
     res.status(500).json({ error: 'Internal server error' })
   }
 }
+
 
 module.exports = {requireAuth, requireAuthAndAuthorization, requireAuthAndAdmin}
