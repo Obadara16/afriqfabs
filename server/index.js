@@ -11,7 +11,6 @@ const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const subCategoryRoutes = require("./routes/subcategory");
 const cors = require("cors");
-const path = require("path"); // import path module
 
 //Use express
 const app = express();
@@ -45,17 +44,10 @@ app.use(
   })
 );
 
-// Serve static files from the 'build' directory
-app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-// Catch-all route that serves the main HTML file
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
-
 // Strict
 mongoose.set("strictQuery", true);
 
+// Connect Database
 // Connect Database
 mongoose
   .connect(process.env.MONGO_URL, {
